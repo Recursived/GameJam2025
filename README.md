@@ -22,6 +22,7 @@ project/
 │   ├── audio/       # Music and sound effects
 │   └── fonts/       # Text fonts
 └── resources/       # Custom Godot resources (.tres files)
+
 🎯 Why This Structure?
 
 Easy Navigation: Find files quickly by their purpose
