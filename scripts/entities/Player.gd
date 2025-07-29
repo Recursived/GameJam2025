@@ -15,8 +15,8 @@ func _physics_process(delta):
 		return
 	
 	var movement = InputManager.get_movement_vector()
-	velocity = movement * speed
-	move_and_slide()
+	# velocity = movement * speed
+	# move_and_slide()
 	
 	EventBus.emit_signal("player_position_changed", global_position)
 
@@ -36,4 +36,4 @@ func die():
 func _on_respawned():
 	health = max_health
 	is_alive = true
-	global_position = Vector2.ZERO  # Or spawn point
+	# global_position = Vector2.ZERO  # Or spawn point
