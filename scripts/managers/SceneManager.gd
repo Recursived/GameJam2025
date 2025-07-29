@@ -1,12 +1,10 @@
 extends Node
 
 var current_scene_name: String = ""
-var loading_screen_scene = preload("res://scenes/UI/LoadingScreen.tscn")
+var loading_screen_scene = preload("res://scenes/UI/StartScreen.tscn")
 
 var scene_paths = {
-	"MainMenu": "res://scenes/UI/MainMenu.tscn",
-	"GameWorld": "res://scenes/Game/GameWorld.tscn",
-	"GameOver": "res://scenes/UI/GameOverScreen.tscn"
+	"Main": "res://scenes/Main.tscn",
 }
 
 func _ready():

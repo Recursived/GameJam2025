@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfv0c8yaehgum"]
+
+[ext_resource type="Theme" uid="uid://cm0hkx0yeq7ia" path="res://themes/main_theme.tres" id="1_768s1"]
+
+[node name="StartScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_768s1")

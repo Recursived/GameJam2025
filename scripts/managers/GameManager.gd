@@ -40,7 +40,8 @@ func start_game():
 	lives = 3
 	current_level = 1
 	EventBus.emit_signal("game_started")
-	SceneManager.change_scene("GameWorld")
+	
+	# SceneManager.change_scene("GameWorld")
 
 func pause_game():
 	if current_state == GameState.PLAYING:
