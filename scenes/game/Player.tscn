@@ -3,11 +3,13 @@
 [ext_resource type="Script" uid="uid://cfv0i5xooavev" path="res://scripts/entities/Player.gd" id="1_4idrh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4idrh"]
+size = Vector2(39, 39)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_4idrh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(19.5, 19.5)
 shape = SubResource("RectangleShape2D_4idrh")
 
 [node name="ColorRect" type="ColorRect" parent="."]

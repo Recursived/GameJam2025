@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed: float = 300.0
+@export var movement_speed: float = 300.0
 @export var max_health: int = 100
 
 var health: int
@@ -14,12 +14,24 @@ func _physics_process(delta):
 	if not is_alive:
 		return
 	
-	var movement = InputManager.get_movement_vector()
-	# velocity = movement * speed
-	# move_and_slide()
+	var previous_position = position
 	
-	EventBus.emit_signal("player_position_changed", global_position)
+	velocity = _process_move()
+	
+	move_and_slide()
+	
+	position = position.clamp(Vector2.ZERO, get_parent().get_screen_size())
+	
+	if position != previous_position:
+		EventBus.emit_signal("player_position_changed", position)
+	
+func _process_move() -> Vector2:
+	var movement = InputManager.get_movement_vector()
+	return movement * movement_speed
 
+func _process_position(delta, velocity):
+	position += velocity * delta
+	
 func take_damage(amount: int):
 	health -= amount
 	health = max(0, health)
