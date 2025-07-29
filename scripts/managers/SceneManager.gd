@@ -54,6 +54,7 @@ func change_scene_with_loading(scene_name: String):
 			get_tree().change_scene_to_packed(new_scene)
 			current_scene_name = scene_name
 			EventBus.emit_signal("scene_transition_completed", scene_name)
+			break
 		else:
 			print("Error: Could not load scene: ", scene_path)
 
