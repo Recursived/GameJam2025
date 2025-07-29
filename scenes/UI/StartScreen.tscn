@@ -1,8 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfv0c8yaehgum"]
+[gd_scene load_steps=3 format=3 uid="uid://dfv0c8yaehgum"]
 
 [ext_resource type="Theme" uid="uid://cm0hkx0yeq7ia" path="res://themes/main_theme.tres" id="1_768s1"]
+[ext_resource type="Script" uid="uid://bshopclps5cti" path="res://scripts/ui/StartScreen.gd" id="2_40q1t"]
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_768s1")
+script = ExtResource("2_40q1t")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1922.0
+offset_bottom = 1079.0
+color = Color(0.547237, 0.376617, 0.253798, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 1919.0
+offset_bottom = 1080.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Game Title"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_768s1")
+text = "Start game"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_start_game_button_pressed"]

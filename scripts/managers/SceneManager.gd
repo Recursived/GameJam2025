@@ -1,10 +1,11 @@
 extends Node
 
 var current_scene_name: String = ""
-var loading_screen_scene = preload("res://scenes/UI/StartScreen.tscn")
+var loading_screen_scene = preload("res://scenes/UI/LoadingScreen.tscn")
 
 var scene_paths = {
 	"Main": "res://scenes/Main.tscn",
+	"StartScreen": "res://scenes/UI/StartScreen.tscn",
 }
 
 func _ready():
@@ -42,16 +43,19 @@ func change_scene_with_loading(scene_name: String):
 	
 	# Load the target scene in the background
 	var scene_path = scene_paths[scene_name]
-	var loader = ResourceLoader.load_threaded_request(scene_path)
-	
-	# Wait for loading to complete (you might want to make this async)
-	await get_tree().process_frame
-	
-	var new_scene = ResourceLoader.load_threaded_get(scene_path)
-	if new_scene:
-		get_tree().change_scene_to_packed(new_scene)
-		current_scene_name = scene_name
-		EventBus.emit_signal("scene_transition_completed", scene_name)
+
+	# Start threaded loading
+	ResourceLoader.load_threaded_request(scene_path)
+	# Wait for the resource to finish loading
+	while ResourceLoader.load_threaded_get_status(scene_path) != ResourceLoader.THREAD_LOAD_LOADED:
+		await get_tree().process_frame
+		var new_scene = ResourceLoader.load_threaded_get(scene_path)
+		if new_scene:
+			get_tree().change_scene_to_packed(new_scene)
+			current_scene_name = scene_name
+			EventBus.emit_signal("scene_transition_completed", scene_name)
+		else:
+			print("Error: Could not load scene: ", scene_path)
 
 func reload_current_scene():
 	change_scene(current_scene_name)
