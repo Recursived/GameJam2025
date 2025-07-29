@@ -39,9 +39,8 @@ func setup_audio_players():
 func load_audio_library():
 	# Load your audio resources here
 	# Example:
-	# audio_library["jump"] = preload("res://assets/audio/sfx/jump.ogg")
+	audio_library["click"] = preload("res://assets/audio/sfx/click.wav")
 	# audio_library["background"] = preload("res://assets/audio/music/background.ogg")
-	pass
 
 func play_sfx(sound_name: String, volume: float = 1.0, pitch: float = 1.0):
 	if not audio_library.has(sound_name):

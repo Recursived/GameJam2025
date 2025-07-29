@@ -1,7 +1,5 @@
 extends Node
 
-signal input_buffer_action(action: String)
-
 var input_buffer: Array[String] = []
 var buffer_time: float = 0.2
 var buffer_timer: float = 0.0
@@ -47,7 +45,7 @@ func handle_buffered_input(event: InputEvent):
 func add_to_buffer(action: String):
 	input_buffer.append(action)
 	buffer_timer = buffer_time
-	emit_signal("input_buffer_action", action)
+	EventBus.emit_signal("input_buffer_action", action)
 
 func clear_input_buffer():
 	input_buffer.clear()
