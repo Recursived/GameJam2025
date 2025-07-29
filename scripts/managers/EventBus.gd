@@ -21,6 +21,9 @@ signal ui_button_pressed(button_name: String)
 signal menu_opened(menu_name: String)
 signal menu_closed(menu_name: String)
 
+# Viewport Events
+signal viewport_size_changed(size: Vector2)
+
 # Audio Events
 signal play_sfx(sound_name: String, volume: float)
 signal play_music(track_name: String, fade_in: bool)

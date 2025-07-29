@@ -20,7 +20,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
-	position = position.clamp(Vector2.ZERO, get_parent().get_screen_size())
+	position = position.clamp(Vector2.ZERO, GameManager.viewport_size)
 	
 	if position != previous_position:
 		EventBus.emit_signal("player_position_changed", position)

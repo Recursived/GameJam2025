@@ -15,6 +15,9 @@ var current_level: int = 1
 var lives: int = 3
 var time_scale: float = 1.0
 
+# Store viewport size globally
+var viewport_size: Vector2 = Vector2.ZERO
+
 var game_data = {
 	"version": "1.0.0",
 	"settings": {},
@@ -32,6 +35,7 @@ func _ready():
 	EventBus.connect("game_over", _on_game_over)
 	EventBus.connect("score_changed", _on_score_changed)
 	EventBus.connect("player_died", _on_player_died)
+	EventBus.connect("viewport_size_changed", _on_viewport_size_changed)
 	
 	load_high_score()
 	print("GameManager initialized")
@@ -122,3 +126,8 @@ func save_high_score():
 
 func load_high_score():
 	high_score = SaveManager.load_data("high_score", 0)
+
+# Handle viewport size signal
+func _on_viewport_size_changed(size: Vector2):
+	viewport_size = size
+	print("Viewport size set to: ", viewport_size)
