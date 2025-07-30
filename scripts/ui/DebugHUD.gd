@@ -10,7 +10,7 @@ var lives_label: Label
 var time_scale_label: Label 
 var viewport_label: Label 
 var version_label: Label 
-var player_label: Label
+var head_label: Label
 
 # Update frequency (in seconds)
 var update_interval: float = 0.1
@@ -26,7 +26,7 @@ func _ready():
 	time_scale_label = $VBoxContainer/TimeScaleLabel
 	viewport_label = $VBoxContainer/ViewportLabel
 	version_label = $VBoxContainer/VersionLabel
-	player_label = $VBoxContainer/PlayerLabel
+	head_label = $VBoxContainer/HeadLabel
 	
 	EventBus.connect("game_started", _on_game_state_changed)
 	EventBus.connect("game_over", _on_game_state_changed)
@@ -66,15 +66,15 @@ func update_debug_display():
 	# Update version from game data
 	version_label.text = "Version: " + str(GameManager.game_data.version)
 	
-	# Update player instance status
-	var player_status = "None"
-	if GameManager.player_instance:
-		if is_instance_valid(GameManager.player_instance):
-			var pos = GameManager.player_instance.global_position
-			player_status = "Active at " + str(pos)
+	# Update head instance status
+	var head_status = "None"
+	if GameManager.head_instance:
+		if is_instance_valid(GameManager.head_instance):
+			var pos = GameManager.head_instance.global_position
+			head_status = "Active at " + str(pos)
 		else:
-			player_status = "Invalid Reference"
-	player_label.text = "Player: " + player_status
+			head_status = "Invalid Reference"
+	head_label.text = "head: " + head_status
 
 func get_state_string(state) -> String:
 	match state:

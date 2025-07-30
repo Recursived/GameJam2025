@@ -24,14 +24,13 @@ var game_data = {
 	"progress": {}
 }
 
-# Reference to the player instance
-var player_instance: CharacterBody2D = null
+# Reference to the head instance
+var head_instance: Area2D = null
 
-# Path to the player scene
-const PLAYER_SCENE_PATH = "res://scenes/game/Player.tscn"
+# Path to the head scene
+const HEAD_SCENE_PATH = "res://scenes/game/Head.tscn"
 
 func _ready():
-	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("game_over", _on_game_over)
 	EventBus.connect("score_changed", _on_score_changed)
 	EventBus.connect("player_died", _on_player_died)
@@ -94,18 +93,6 @@ func get_state() -> GameState:
 func set_time_scale(scale: float):
 	time_scale = scale
 	Engine.time_scale = scale
-
-func _on_game_started():
-	print("Game Started!")
-	# Instance and add the player to the scene
-	var player_scene = load("res://scenes/game/Player.tscn")
-	if player_scene:
-		player_instance = player_scene.instantiate()
-		# Add to the main scene or root
-		get_tree().current_scene.add_child(player_instance)
-		# Optionally, set position or other properties here
-	else:
-		print("Error: Could not load Player.tscn!")
 
 func _on_game_over():
 	print("Game Over! Final Score: ", score)
