@@ -77,14 +77,5 @@ func set_input_enabled(enabled: bool):
 func set_input_context(context: String):
 	input_context = context
 
-func get_movement_vector() -> Vector2:
-	if not input_enabled:
-		return Vector2.ZERO
-	
-	var vector = Vector2()
-	vector.x = Input.get_axis("move_left", "move_right")
-	vector.y = Input.get_axis("move_up", "move_down")
-	return vector
-
 func is_action_just_pressed_buffered(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or consume_buffered_action(action)

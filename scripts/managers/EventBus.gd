@@ -19,8 +19,8 @@ signal score_changed(new_score: int)
 #region Player Events
 signal player_died
 signal player_respawned
-signal player_health_changed(health: int, max_health: int)
-signal player_position_changed(position: Vector2)
+signal player_health_changed(health: int, max_size: int)
+signal head_position_changed(previous_position: Vector2, position: Vector2)
 #endregion
 
 #region UI Events
