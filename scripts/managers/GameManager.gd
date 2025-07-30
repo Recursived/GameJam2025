@@ -130,4 +130,3 @@ func load_high_score():
 # Handle viewport size signal
 func _on_viewport_size_changed(size: Vector2):
 	viewport_size = size
-	print("Viewport size set to: ", viewport_size)
