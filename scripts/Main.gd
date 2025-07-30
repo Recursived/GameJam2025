@@ -14,5 +14,4 @@ func _ready():
 func _on_viewport_size_changed():
 	var vsize = get_viewport().get_visible_rect().size
 	EventBus.emit_signal("viewport_size_changed", vsize)
-	print("Viewport size changed to: ", vsize)
-	
+	get_viewport().size_changed.connect(_on_viewport_size_changed)

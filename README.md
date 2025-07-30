@@ -20,12 +20,14 @@ project/
 │   ├── entities/    # Game objects (player, enemies, etc.)
 │   ├── components/  # Reusable script components
 │   └── ui/          # UI-specific scripts
-├── assets/          # All game assets
-│   ├── textures/    # Images, sprites, icons
-│   ├── audio/       # Music and sound effects
+└── themes/          # Theme related files (.tres files)
 │   └── fonts/       # Text fonts
-└── resources/       # Custom Godot resources (.tres files)
-```
+├── resources/       # All game assets
+│   ├── textures/    # Images, sprites, icons
+│   ├── audio/       # Music and sound effects   
+       ├── sfx/     
+       ├── music     
+│   ```
 
 ### 🎯 Why This Structure?
 
@@ -50,6 +52,9 @@ SceneManager  # Switching between scenes
 AudioManager  # Music and sound effects
 InputManager  # Player input handling
 SaveManager   # Saving and loading data
+HudManager    # Takes care of the hud
+ThemeManager  # Applies themes to UI layer elements
+PlayerManager # Takes care of the player events (spawn, ...) --> to be removed when the game jam starts
 ```
 
 ### Event-Driven Communication
@@ -61,7 +66,7 @@ Instead of scripts talking directly to each other (which creates messy dependenc
 player.health_component.take_damage(10)
 ui.health_bar.update_display(player.health)
 
-# ✅ Good - Event-driven
+# ✅ Good - Event-driven **(important)**
 EventBus.emit_signal("player_health_changed", health, max_health)
 # Any script can listen for this event and react accordingly
 ```
@@ -322,6 +327,8 @@ Add debug prints to EventBus connections:
 func _on_player_health_changed(health: int, max_health: int):
     print("DEBUG: Player health: ", health, "/", max_health)
 ```
+
+A hud for debug has been added to the boilerplate (in game). It can be displayed by the following keystore `MAJ+` 
 
 ### Manager State Inspection
 
