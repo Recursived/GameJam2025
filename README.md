@@ -17,6 +17,7 @@ The tail does not shrink unless you get a malus or entities touches you then you
 
 ##  Roadmap
 
+```
 1. PoC game loop
     1.1 Move
     1.2 Cut snake
@@ -29,7 +30,7 @@ The tail does not shrink unless you get a malus or entities touches you then you
     4.1 buff
     4.2 Procedural creation of level
 5. Beautify the game
-
+```
 
 ## 📁 Project Structure
 
