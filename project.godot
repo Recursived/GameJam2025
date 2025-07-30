@@ -24,6 +24,7 @@ InputManager="*res://scripts/managers/InputManager.gd"
 SaveManager="*res://scripts/managers/SaveManager.gd"
 SceneManager="*res://scripts/managers/SceneManager.gd"
 PlayerManager="*res://scripts/managers/PlayerManager.gd"
+HudManager="*res://scripts/managers/HudManager.gd"
 
 [display]
 
