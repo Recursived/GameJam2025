@@ -5,6 +5,32 @@
 3. Read this README to understand the architecture
 4. Start building your game features!
 
+
+## 📁 Game idea
+
+This is a rythmic game where you control a snake/lasso that needs to circle entities on the map. Those entities can have various powerups that you need to manage. When you complete a level, you can ask for a powerup on your turn by turn action (a la roguelike). If you don't bite your tail,
+you cut the backend part of the snake.
+
+The win condition of a level is to remove all the entities from the level. 
+The lose condition is if you can't finish because you are too small.
+The tail does not shrink unless you get a malus or entities touches you then you shrink or you eat yourself at the wrong spot
+
+##  Roadmap
+
+1. PoC game loop
+    1.1 Move
+    1.2 Cut snake
+    1.3 Clear a looped zone
+2. Metronome action based system
+3. Complexify gameplay
+    3.1 Items on the map
+    3.2 Entities on the map getting stronger
+4. Roguelike loop
+    4.1 buff
+    4.2 Procedural creation of level
+5. Beautify the game
+
+
 ## 📁 Project Structure
 
 Understanding our folder organization is crucial for maintaining clean code:
@@ -25,9 +51,9 @@ project/
 ├── resources/       # All game assets
 │   ├── textures/    # Images, sprites, icons
 │   ├── audio/       # Music and sound effects   
-│      ├── sfx/     
-│      ├── music
-```
+       ├── sfx/     
+       ├── music     
+│   ```
 
 ### 🎯 Why This Structure?
 
@@ -46,15 +72,16 @@ Managers are special scripts that exist throughout your entire game. They handle
 
 ```gdscript
 # These are autoloaded - available everywhere as global variables
-EventBus      # Communication system
-GameManager   # Game rules, scoring, state
-SceneManager  # Switching between scenes
-AudioManager  # Music and sound effects
-InputManager  # Player input handling
-SaveManager   # Saving and loading data
-HudManager    # Takes care of the hud
-ThemeManager  # Applies themes to UI layer elements
-PlayerManager # Takes care of the player events (spawn, ...) --> to be removed when the game jam starts
+EventBus          # Communication system
+GameManager       # Game rules, scoring, state
+SceneManager      # Switching between levels, procedural creation of level
+AudioManager      # Music and sound effects
+InputManager      # Player input handling
+SaveManager       # Saving and loading data --> maybe not used
+HudManager        # Takes care of the hud
+ThemeManager      # Applies themes to UI layer elements
+PlayerManager     # Takes care of the player events (spawn, powerups) --> to be removed when the game jam starts
+MobManager        # Spawn of the mobs, despawn, 
 ```
 
 ### Event-Driven Communication
