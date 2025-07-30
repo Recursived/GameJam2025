@@ -25,9 +25,9 @@ project/
 ├── resources/       # All game assets
 │   ├── textures/    # Images, sprites, icons
 │   ├── audio/       # Music and sound effects   
-       ├── sfx/     
-       ├── music     
-│   ```
+│      ├── sfx/     
+│      ├── music
+```
 
 ### 🎯 Why This Structure?
 
