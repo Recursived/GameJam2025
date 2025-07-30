@@ -2,6 +2,10 @@ extends Node
 
 # Global event bus for decoupled communication between systems
 
+
+# Input Events
+signal input_buffer_action(action: String)
+
 # Game Events
 signal game_started
 signal game_paused
