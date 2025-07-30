@@ -21,6 +21,7 @@ signal player_died
 signal player_respawned
 signal player_health_changed(health: int, max_size: int)
 signal head_position_changed(previous_position: Vector2, position: Vector2)
+signal bell_changed(tail_object: Tail)
 #endregion
 
 #region UI Events

@@ -6,20 +6,28 @@ const TAIL_SCENE_PATH = "res://scenes/game/Tail.tscn"
 var head_scene: PackedScene
 var tail_scene: PackedScene
 var current_head: Area2D
-var tail_list: Array[Area2D]
+var tail_list: Array[Tail]
 var spawn_points: Array[Vector2] = [Vector2.ZERO]
 var current_spawn_index: int = 0
+var max_size: int = 10
+var size: int
+var is_alive: bool
 
 func _ready():
 	# Load head scene at startup
 	load_head_scene()
 	load_tail_scene()
 	
+	tail_list = []
+	size = 0
+	is_alive = true
+	
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("player_died", _on_player_died)
 	EventBus.connect("game_over", _on_game_over)
 	EventBus.connect("head_position_changed", _on_player_movement)
 	EventBus.connect("game_started", _on_game_started)
+	EventBus.connect("player_respawned", _on_respawned)
 	print("PlayerManager initialized")
 
 
@@ -81,10 +89,45 @@ func _on_game_over():
 		current_head = null
 
 func _on_player_movement(previous_position:Vector2, position:Vector2):
-	print(previous_position)
 	if not tail_scene:
 		push_error("PlayerManager: No tail scene assigned!")
 		return
+	
+	var new_tail = tail_scene.instantiate()
+	get_tree().current_scene.add_child(new_tail)
+	new_tail.global_position = previous_position
+	
+	if tail_list.is_empty():
+		EventBus.emit_signal("bell_changed", new_tail)
+	
+	tail_list.append(new_tail)
+	size = tail_list.size()
+	
+	if size > max_size:
+		var old_bell: Tail = tail_list.pop_front()
+		old_bell.queue_free()
+		EventBus.emit_signal("bell_changed", tail_list[0])
+	
+	print("Tail spawned at: ", new_tail.global_position)
+	
 
 func get_player() -> Area2D:
 	return current_head
+
+func take_damage(amount: int):
+	max_size -= amount
+	max_size = max(0, max_size)
+	EventBus.emit_signal("player_health_changed", size, max_size)
+	
+	if max_size <= 0:
+		die()
+
+func die():
+	is_alive = false
+	EventBus.emit_signal("player_died")
+	EventBus.emit_signal("play_sfx", "player_death")
+
+func _on_respawned():
+	size = 0
+	is_alive = true
+	# global_position = Vector2.ZERO  # Or spawn point
