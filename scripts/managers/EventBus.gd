@@ -23,8 +23,12 @@ signal player_health_changed(health: int, max_size: int)
 signal head_position_changed(previous_position: Vector2, position: Vector2)
 signal bell_changed(tail_object: Tail)
 signal head_on_tail_collision(tail_object: Tail)
+signal head_on_wall_collision(area: Area2D)
+signal rollback_head(new_position: Vector2)
 signal bell_touched
 signal tail_touched
+signal wall_touched
+signal head_rollbacked
 #endregion
 
 #region UI Events
