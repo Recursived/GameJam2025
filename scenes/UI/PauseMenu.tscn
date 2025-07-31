@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://2q5b84rjtdst"]
+[gd_scene load_steps=3 format=3 uid="uid://d0umt8ye1crho"]
 
-[ext_resource type="Script" uid="uid://dyhqkr0pl4feq" path="res://scripts/ui/PauseMenu.gd" id="1_6q0ex"]
+[ext_resource type="Script" path="res://scripts/ui/PauseMenu.gd" id="1_6q0ex"]
 [ext_resource type="Theme" uid="uid://cm0hkx0yeq7ia" path="res://themes/main_theme.tres" id="1_fsae6"]
 
 [node name="PauseMenu" type="Control"]
+z_index = 10
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

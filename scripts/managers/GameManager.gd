@@ -14,7 +14,6 @@ var high_score: int = 0
 var current_level: int = 1
 var lives: int = 3
 var time_scale: float = 1.0
-var tile_size: float = 60.0
 
 # Store viewport size globally
 var viewport_size: Vector2 = Vector2.ZERO

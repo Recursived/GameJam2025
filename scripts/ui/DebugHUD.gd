@@ -61,9 +61,10 @@ func update_debug_display():
 	# Player info
 	lives_label.text = "Size: " + str(PlayerManager.tail_list.size())
 	if PlayerManager.current_head:
-		head_info_label.text = "Size: " + str(PlayerManager.current_head.position / GameManager.tile_size)
+		var cell_pos = TileMapManager.position_to_cell(PlayerManager.current_head.position)
+		head_info_label.text = "Cell position: " + str(cell_pos)
 	else:
-		head_info_label.text = "Size: " + str(Vector2i.ZERO/ GameManager.tile_size)
+		head_info_label.text = "Size: " + str(Vector2i.ZERO)
 	# Update time scale
 	time_scale_label.text = "Time Scale: " + str(GameManager.time_scale)
 	
@@ -75,13 +76,13 @@ func update_debug_display():
 	
 	# Update head instance status
 	var head_status = "None"
-	if GameManager.head_instance:
-		if is_instance_valid(GameManager.head_instance):
-			var pos = GameManager.head_instance.global_position
+	if PlayerManager.current_head:
+		if is_instance_valid(PlayerManager.current_head):
+			var pos = PlayerManager.current_head.global_position
 			head_status = "Active at " + str(pos)
 		else:
 			head_status = "Invalid Reference"
-	head_label.text = "head: " + head_status
+	head_label.text = "pixel position: " + head_status
 
 func get_state_string(state) -> String:
 	match state:
