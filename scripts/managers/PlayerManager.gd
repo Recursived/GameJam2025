@@ -31,6 +31,7 @@ func _ready():
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("player_respawned", _on_respawned)
 	EventBus.connect("head_on_tail_collision", _on_head_on_tail_collision)
+	EventBus.connect("head_on_wall_collision", _on_head_on_wall_collision)
 	print("PlayerManager initialized")
 
 
@@ -121,8 +122,7 @@ func _on_head_on_tail_collision(tail_object: Tail):
 	if(tail_object.is_bell):
 		EventBus.emit_signal("bell_touched")
 		while not tail_list.is_empty():
-			var old_bell: Tail = tail_list.pop_front()
-			old_bell.queue_free()
+			_remove_back_tail()
 		
 	# Reset to the tail behind the tail object touched
 	else:
@@ -130,16 +130,34 @@ func _on_head_on_tail_collision(tail_object: Tail):
 		var index_to_reset: int = tail_list.find(tail_object) + 1
 		var tail_to_reset: Tail = tail_list[min(max_size, index_to_reset)]
 		
-		var old_bell: Tail = tail_list.pop_front()
+		var old_bell: Tail = _remove_back_tail()
 		while old_bell != tail_to_reset or tail_list.is_empty():
-			old_bell.queue_free()
-			old_bell = tail_list.pop_front()
-		old_bell.queue_free()
+			old_bell = _remove_back_tail()
 		
 		EventBus.emit_signal("bell_changed", tail_list[0])
 
 	max_size = default_size
 	size = tail_list.size()
+
+func _on_head_on_wall_collision(area_object: Area2D):
+	EventBus.emit_signal("wall_touched")
+	var head_position = _remove_front_tail().position
+	EventBus.emit_signal("rollback_head", head_position)
+	
+func _remove_back_tail() -> Tail:
+	var old_bell: Tail = tail_list.pop_front()
+	old_bell.queue_free()
+	return old_bell
+
+func get_last_tail_position():
+	if tail_list.is_empty():
+		return null
+	return tail_list[-1].position
+
+func _remove_front_tail() -> Tail:
+	var old_bell: Tail = tail_list.pop_back()
+	old_bell.queue_free()
+	return old_bell
 
 func get_player() -> Area2D:
 	return current_head
