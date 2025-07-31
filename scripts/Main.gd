@@ -4,6 +4,7 @@ extends Node2D
 # Main.gd
 func _ready():
 	# Initialize the main scene
+	GameManager.load_game()
 	GameManager.start_game()
 	# Send viewport size to GameManager
 	var vsize = get_viewport().get_visible_rect().size

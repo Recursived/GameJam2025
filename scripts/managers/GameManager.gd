@@ -25,12 +25,6 @@ var game_data = {
 	"progress": {}
 }
 
-# Reference to the head instance
-var head_instance: Area2D = null
-
-# Path to the head scene
-const HEAD_SCENE_PATH = "res://scenes/game/Head.tscn"
-
 func _ready():
 	EventBus.connect("game_over", _on_game_over)
 	EventBus.connect("score_changed", _on_score_changed)
@@ -43,6 +37,12 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("pause"):
 		toggle_pause()
+		
+func load_game():
+	TileMapManager.load_floor_scene()
+	TileMapManager.load_walls_scene()
+	TileMapManager.instanciate_tile_maps()
+	EventBus.emit_signal("game_loaded")
 
 func start_game():
 	current_state = GameState.PLAYING

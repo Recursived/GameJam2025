@@ -7,12 +7,13 @@ var head_scene: PackedScene
 var tail_scene: PackedScene
 var current_head: Area2D
 var tail_list: Array[Tail]
-var spawn_points: Array[Vector2] = [Vector2.ZERO]
+var spawn_points: Array[Vector2] = [Vector2(3,3)]
 var current_spawn_index: int = 0
 var default_size: int = 12
 var max_size: int
 var size: int
 var is_alive: bool
+var next_move:int = -1
 
 func _ready():
 	# Load head scene at startup
@@ -27,13 +28,12 @@ func _ready():
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("player_died", _on_player_died)
 	EventBus.connect("game_over", _on_game_over)
-	EventBus.connect("head_position_changed", _on_player_movement)
+	EventBus.connect("head_cell_changed", _on_player_movement)
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("player_respawned", _on_respawned)
 	EventBus.connect("head_on_tail_collision", _on_head_on_tail_collision)
 	EventBus.connect("head_on_wall_collision", _on_head_on_wall_collision)
 	print("PlayerManager initialized")
-
 
 func load_head_scene():
 	head_scene = load(HEAD_SCENE_PATH)
@@ -67,13 +67,16 @@ func spawn_player():
 	
 	current_head = head_scene.instantiate()
 	get_tree().current_scene.add_child(current_head)
-	current_head.global_position = spawn_points[current_spawn_index]
 	
-	print("Player spawned at: ", spawn_points[current_spawn_index])
+	var current_spawn_cell: Vector2 = spawn_points[current_spawn_index]
+	current_head.init_spawn_cell(current_spawn_cell)
+	
+	print("Player spawned at: ", current_spawn_cell)
 
 func respawn_player():
 	if current_head and is_instance_valid(current_head):
-		current_head.reset_to_spawn(spawn_points[current_spawn_index])
+		var current_spawn_cell: Vector2 = spawn_points[current_spawn_index]
+		current_head.reset_to_spawn(TileMapManager.cell_to_position(current_spawn_cell))
 		EventBus.emit_signal("player_respawned")
 
 func _on_player_died():
@@ -91,15 +94,16 @@ func _on_game_over():
 	if current_head and is_instance_valid(current_head):
 		current_head.queue_free()
 		current_head = null
-
-func _on_player_movement(previous_position:Vector2, position:Vector2):
+		
+		
+func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
 	if not tail_scene:
 		push_error("PlayerManager: No tail scene assigned!")
 		return
 	
 	var new_tail = tail_scene.instantiate()
 	get_tree().current_scene.add_child(new_tail)
-	new_tail.global_position = previous_position
+	new_tail.global_position = TileMapManager.cell_to_position(previous_cell)
 	
 	if tail_list.is_empty():
 		EventBus.emit_signal("bell_changed", new_tail)
@@ -113,7 +117,7 @@ func _on_player_movement(previous_position:Vector2, position:Vector2):
 		EventBus.emit_signal("bell_changed", tail_list[0])
 		max_size+=1
 	
-	print("Tail spawned at: ", new_tail.global_position)
+	print("Tail spawned at: ", previous_cell)
 
 func _on_head_on_tail_collision(tail_object: Tail):
 	print("head touched tail, bell status: ", tail_object.is_bell)
@@ -139,20 +143,20 @@ func _on_head_on_tail_collision(tail_object: Tail):
 	max_size = default_size
 	size = tail_list.size()
 
-func _on_head_on_wall_collision(area_object: Area2D):
+func _on_head_on_wall_collision():
 	EventBus.emit_signal("wall_touched")
-	var head_position = _remove_front_tail().position
-	EventBus.emit_signal("rollback_head", head_position)
+	var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
+	EventBus.emit_signal("rollback_head", head_cell)
 	
 func _remove_back_tail() -> Tail:
 	var old_bell: Tail = tail_list.pop_front()
 	old_bell.queue_free()
 	return old_bell
 
-func get_last_tail_position():
+func get_last_tail_cell():
 	if tail_list.is_empty():
 		return null
-	return tail_list[-1].position
+	return TileMapManager.position_to_cell(tail_list[-1].position)
 
 func _remove_front_tail() -> Tail:
 	var old_bell: Tail = tail_list.pop_back()
