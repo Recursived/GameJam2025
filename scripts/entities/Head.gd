@@ -7,6 +7,7 @@ var next_move:Vector2 = Vector2.ZERO
 
 func _ready():
 	EventBus.connect("input_buffer_action", set_next_move)
+	self.connect("area_entered", on_head_collide)
 
 func _physics_process(delta):
 	if not PlayerManager.is_alive:
@@ -33,3 +34,7 @@ func set_next_move(action: String):
 		next_move = input_dict.get(action)
 	else:
 		next_move = Vector2.ZERO
+
+func on_head_collide(area: Area2D):
+	if is_instance_of(area, Tail):
+		EventBus.emit_signal("head_on_tail_collision", area)
