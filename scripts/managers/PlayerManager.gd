@@ -9,7 +9,8 @@ var current_head: Area2D
 var tail_list: Array[Tail]
 var spawn_points: Array[Vector2] = [Vector2.ZERO]
 var current_spawn_index: int = 0
-var max_size: int = 10
+var default_size: int = 12
+var max_size: int
 var size: int
 var is_alive: bool
 
@@ -19,6 +20,7 @@ func _ready():
 	load_tail_scene()
 	
 	tail_list = []
+	max_size = default_size
 	size = 0
 	is_alive = true
 	
@@ -28,6 +30,7 @@ func _ready():
 	EventBus.connect("head_position_changed", _on_player_movement)
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("player_respawned", _on_respawned)
+	EventBus.connect("head_on_tail_collision", _on_head_on_tail_collision)
 	print("PlayerManager initialized")
 
 
@@ -107,9 +110,36 @@ func _on_player_movement(previous_position:Vector2, position:Vector2):
 		var old_bell: Tail = tail_list.pop_front()
 		old_bell.queue_free()
 		EventBus.emit_signal("bell_changed", tail_list[0])
+		max_size+=1
 	
 	print("Tail spawned at: ", new_tail.global_position)
+
+func _on_head_on_tail_collision(tail_object: Tail):
+	print("head touched tail, bell status: ", tail_object.is_bell)
 	
+	# Reset the entire tail list
+	if(tail_object.is_bell):
+		EventBus.emit_signal("bell_touched")
+		while not tail_list.is_empty():
+			var old_bell: Tail = tail_list.pop_front()
+			old_bell.queue_free()
+		
+	# Reset to the tail behind the tail object touched
+	else:
+		EventBus.emit_signal("tail_touched")
+		var index_to_reset: int = tail_list.find(tail_object) + 1
+		var tail_to_reset: Tail = tail_list[min(max_size, index_to_reset)]
+		
+		var old_bell: Tail = tail_list.pop_front()
+		while old_bell != tail_to_reset or tail_list.is_empty():
+			old_bell.queue_free()
+			old_bell = tail_list.pop_front()
+		old_bell.queue_free()
+		
+		EventBus.emit_signal("bell_changed", tail_list[0])
+
+	max_size = default_size
+	size = tail_list.size()
 
 func get_player() -> Area2D:
 	return current_head

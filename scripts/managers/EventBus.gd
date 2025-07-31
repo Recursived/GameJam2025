@@ -22,6 +22,9 @@ signal player_respawned
 signal player_health_changed(health: int, max_size: int)
 signal head_position_changed(previous_position: Vector2, position: Vector2)
 signal bell_changed(tail_object: Tail)
+signal head_on_tail_collision(tail_object: Tail)
+signal bell_touched
+signal tail_touched
 #endregion
 
 #region UI Events
