@@ -6,7 +6,8 @@ var state_label: Label
 var score_label: Label
 var high_score_label: Label  
 var level_label: Label 
-var lives_label: Label  
+var lives_label: Label
+var head_info_label: Label  
 var time_scale_label: Label 
 var viewport_label: Label 
 var version_label: Label 
@@ -23,6 +24,7 @@ func _ready():
 	high_score_label = $VBoxContainer/HighScoreLabel
 	level_label = $VBoxContainer/LevelLabel
 	lives_label = $VBoxContainer/LivesLabel
+	head_info_label = $VBoxContainer/HeadInfoLabel
 	time_scale_label = $VBoxContainer/TimeScaleLabel
 	viewport_label = $VBoxContainer/ViewportLabel
 	version_label = $VBoxContainer/VersionLabel
@@ -47,7 +49,7 @@ func update_debug_display():
 	
 	# Update state
 	var state_text = get_state_string(GameManager.current_state)
-	state_label.text = "State: " + state_text
+	state_label.text = "Engine State: " + state_text
 	
 	# Update score and high score
 	score_label.text = "Score: " + str(GameManager.score)
@@ -55,7 +57,10 @@ func update_debug_display():
 	
 	# Update level and lives
 	level_label.text = "Level: " + str(GameManager.current_level)
-	lives_label.text = "Lives: " + str(GameManager.lives)
+	
+	# Player info
+	lives_label.text = "Size: " + str(PlayerManager.tail_list.size())
+	head_info_label.text = "Size: " + str(PlayerManager.current_head.position / GameManager.tile_size)
 	
 	# Update time scale
 	time_scale_label.text = "Time Scale: " + str(GameManager.time_scale)

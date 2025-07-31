@@ -11,23 +11,30 @@ script = ExtResource("2_40q1t")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_right = 1922.0
-offset_bottom = 1079.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 color = Color(0.547237, 0.376617, 0.253798, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 1919.0
-offset_bottom = 1080.0
+offset_left = 649.0
+offset_top = 316.0
+offset_right = 1209.0
+offset_bottom = 709.0
+theme = ExtResource("1_768s1")
+alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Game Title"
+theme = ExtResource("1_768s1")
+theme_override_font_sizes/font_size = 50
+text = "Ouroboboy"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_768s1")
+theme_override_font_sizes/font_size = 50
 text = "Start game"
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_start_game_button_pressed"]

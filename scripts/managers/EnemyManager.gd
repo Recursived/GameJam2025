@@ -1,8 +1,6 @@
 extends Node
 
-
-# Preload the Enemy class so it is available in the current scope
-const  = preload("res://scenes/game/enemy.gd")
+const Enemy = preload("res://scripts/entities/Enemy.gd")
 
 func _ready() -> void:
 	EventBus.connect("game_started", _on_game_started)
