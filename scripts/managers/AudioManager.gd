@@ -11,6 +11,7 @@ var sfx_volume: float = 0.8
 var audio_library = {}
 
 var current_music: String = ""
+var paused_music_position: float = 0.0
 
 func _ready():
 	setup_audio_players()
@@ -19,7 +20,11 @@ func _ready():
 	EventBus.connect("play_sfx", _on_play_sfx)
 	EventBus.connect("play_music", _on_play_music)
 	EventBus.connect("stop_music", _on_stop_music)
-	
+	EventBus.connect("pause_music", pause_music)
+	EventBus.connect("resume_music", resume_music)
+	EventBus.connect("set_sfx_volume", set_sfx_volume)
+	EventBus.connect("set_music_volume", set_music_volume)
+
 	print("AudioManager initialized")
 
 func setup_audio_players():
@@ -121,6 +126,18 @@ func set_sfx_volume(volume: float):
 
 func update_audio_volumes():
 	music_player.volume_db = linear_to_db(music_volume * master_volume)
+
+func pause_music():
+	if music_player.playing:
+		paused_music_position = music_player.get_playback_position()
+		music_player.stop()
+
+
+func resume_music():
+	if current_music != "" and audio_library.has(current_music):
+		music_player.stream = audio_library[current_music]
+		music_player.volume_db = linear_to_db(music_volume * master_volume)
+		music_player.play(paused_music_position)
 
 func _on_play_sfx(sound_name: String, volume: float = 1.0):
 	play_sfx(sound_name, volume)

@@ -45,6 +45,10 @@ signal viewport_size_changed(size: Vector2)
 signal play_sfx(sound_name: String, volume: float)
 signal play_music(track_name: String, fade_in: bool)
 signal stop_music(fade_out: bool)
+signal set_sfx_volume(volume: float)
+signal set_music_volume(volume: float)
+signal pause_music
+signal resume_music
 #endregion
 
 #region Scene Events
