@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://2q5b84rjtdst"]
+
+[ext_resource type="Theme" uid="uid://cm0hkx0yeq7ia" path="res://themes/main_theme.tres" id="1_fsae6"]
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.207843, 0.207843, 0.207843, 0.729412)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+offset_left = 588.0
+offset_top = 306.0
+offset_right = 1334.0
+offset_bottom = 583.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+theme = ExtResource("1_fsae6")
+alignment = 1
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_fsae6")
+theme_override_font_sizes/font_size = 111
+text = "Resume"
+
+[node name="MusicLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_fsae6")
+text = "Music level:"
+
+[node name="HSlider" type="HSlider" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_fsae6")
+
+[node name="SfxLabel" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_fsae6")
+text = "Sound effects level:"
+
+[node name="HSlider2" type="HSlider" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_fsae6")
