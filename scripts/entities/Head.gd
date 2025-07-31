@@ -1,7 +1,6 @@
 class_name Head
 extends Area2D
 
-@export var movement_step: int = 60
 var previous_cell:Vector2 = Vector2.ZERO
 var next_cell:Vector2 = Vector2.ZERO
 
