@@ -14,4 +14,4 @@ func _on_game_started():
 		var instance_enemy = enemy_scene.instantiate() as Enemy
 		if instance_enemy is Enemy:
 			get_tree().current_scene.add_child(instance_enemy)
-			instance_enemy.initialize(Vector2(4, 3), 3, 2) # Example values
+			instance_enemy.initialize(Vector2(6, 3), 3, 2) # Example values

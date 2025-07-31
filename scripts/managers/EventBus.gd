@@ -8,6 +8,7 @@ signal input_buffer_action(action: String)
 #endregion
 
 #region Game Events
+signal game_load
 signal game_started
 signal game_paused
 signal game_resumed
@@ -20,11 +21,11 @@ signal score_changed(new_score: int)
 signal player_died
 signal player_respawned
 signal player_health_changed(health: int, max_size: int)
-signal head_position_changed(previous_position: Vector2, position: Vector2)
+signal head_cell_changed(previous_cell: Vector2, next_cell: Vector2)
 signal bell_changed(tail_object: Tail)
 signal head_on_tail_collision(tail_object: Tail)
-signal head_on_wall_collision(area: Area2D)
-signal rollback_head(new_position: Vector2)
+signal head_on_wall_collision
+signal rollback_head(new_cell: Vector2)
 signal bell_touched
 signal tail_touched
 signal wall_touched
