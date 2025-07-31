@@ -60,8 +60,10 @@ func update_debug_display():
 	
 	# Player info
 	lives_label.text = "Size: " + str(PlayerManager.tail_list.size())
-	head_info_label.text = "Size: " + str(PlayerManager.current_head.position / GameManager.tile_size)
-	
+	if PlayerManager.current_head:
+		head_info_label.text = "Size: " + str(PlayerManager.current_head.position / GameManager.tile_size)
+	else:
+		head_info_label.text = "Size: " + str(Vector2i.ZERO/ GameManager.tile_size)
 	# Update time scale
 	time_scale_label.text = "Time Scale: " + str(GameManager.time_scale)
 	
