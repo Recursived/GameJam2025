@@ -163,7 +163,9 @@ func get_player() -> Area2D:
 func _on_beat():
 	beat_count +=1
 	if beat_count>0 and beat_count % 4 == 0:
-		take_size_damage(1)
+		pass
+		#Removed this because it made the game too hard
+		#take_size_damage(1)
 	
 func _on_false_movement_damage(_input):
 	take_size_damage(1)

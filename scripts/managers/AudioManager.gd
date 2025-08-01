@@ -47,6 +47,7 @@ func load_audio_library():
 	# Example:
 	audio_library["button_click"] = preload("res://resources/audio/sfx/button_click.wav")
 	audio_library["game_music"] = preload("res://resources/audio/music/game_music.mp3")
+	audio_library["evlan"] = preload("res://resources/audio/music/evlan.mp3")
 	
 	
 

@@ -28,12 +28,13 @@ func _on_game_started():
 	clock_instance = clock_scene.instantiate()
 	get_tree().current_scene.add_child(clock_instance)
 	clock_instance.wait_time = wait_time
+	EventBus.emit_signal("play_music", "evlan", 0.0)
 	clock_instance.start()
 	clock_instance.connect("timeout", _on_beat)
 
 func _on_beat():
 	_set_beat_time()
-	EventBus.emit_signal("play_sfx", "button_click", 1.0)
+	#EventBus.emit_signal("play_sfx", "button_click", 1.0)
 	EventBus.emit_signal("beat_triggered")
 
 func _set_beat_time():
