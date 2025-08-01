@@ -3,17 +3,17 @@
 [ext_resource type="Script" uid="uid://cfv0i5xooavev" path="res://scripts/entities/Head.gd" id="1_4idrh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4idrh"]
-size = Vector2(60, 60)
+size = Vector2(30, 30)
 
 [node name="Head" type="Area2D"]
 script = ExtResource("1_4idrh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(30, 30)
+position = Vector2(15, 15)
 scale = Vector2(0.9, 0.9)
 shape = SubResource("RectangleShape2D_4idrh")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 60.0
-offset_bottom = 60.0
+offset_right = 30.0
+offset_bottom = 30.0
 color = Color(0.723451, 0.135811, 0.413791, 1)
