@@ -25,8 +25,9 @@ SaveManager="*res://scripts/managers/SaveManager.gd"
 SceneManager="*res://scripts/managers/SceneManager.gd"
 PlayerManager="*res://scripts/managers/PlayerManager.gd"
 HudManager="*res://scripts/managers/HudManager.gd"
-EnemyManager="*res://scripts/managers/EnemyManager.gd"
 TileMapManager="*res://scripts/managers/TileMapManager.gd"
+EnemyManager="*res://scripts/managers/EnemyManager.gd"
+RhythmManager="*res://scripts/managers/RhythmManager.gd"
 
 [display]
 

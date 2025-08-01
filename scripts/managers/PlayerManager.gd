@@ -9,11 +9,12 @@ var current_head: Area2D
 var tail_list: Array[Tail]
 var spawn_points: Array[Vector2] = [Vector2(3,3)]
 var current_spawn_index: int = 0
-var default_size: int = 12
-var max_size: int
-var size: int
+var beats_before_time_damage: int = 12
+var spawn_immunity: bool = true
+var reset_min_size: int = 3
 var is_alive: bool
 var next_move:int = -1
+var beat_count:int = 0
 
 func _ready():
 	# Load head scene at startup
@@ -21,8 +22,6 @@ func _ready():
 	load_tail_scene()
 	
 	tail_list = []
-	max_size = default_size
-	size = 0
 	is_alive = true
 	
 	EventBus.connect("game_started", _on_game_started)
@@ -33,6 +32,9 @@ func _ready():
 	EventBus.connect("player_respawned", _on_respawned)
 	EventBus.connect("head_on_tail_collision", _on_head_on_tail_collision)
 	EventBus.connect("head_on_wall_collision", _on_head_on_wall_collision)
+	EventBus.connect("beat_triggered", _on_beat)
+	EventBus.connect("movement_input_not_on_beat", _on_false_movement_damage)
+	EventBus.connect("size_changed", _on_size_changed)
 	print("PlayerManager initialized")
 
 func load_head_scene():
@@ -71,20 +73,15 @@ func spawn_player():
 	var current_spawn_cell: Vector2 = spawn_points[current_spawn_index]
 	current_head.init_spawn_cell(current_spawn_cell)
 	
+	beat_count = -beats_before_time_damage
+	spawn_immunity = true
 	print("Player spawned at: ", current_spawn_cell)
 
-func respawn_player():
-	if current_head and is_instance_valid(current_head):
-		var current_spawn_cell: Vector2 = spawn_points[current_spawn_index]
-		current_head.reset_to_spawn(TileMapManager.cell_to_position(current_spawn_cell))
-		EventBus.emit_signal("player_respawned")
-
 func _on_player_died():
-	# PlayerManager doesn't handle game logic, just respawning
-	if GameManager.lives > 0:
-		# Delay respawn slightly for death animation
-		await get_tree().create_timer(1.0).timeout
-		respawn_player()
+	while not tail_list.is_empty():
+		_remove_back_tail()
+	current_head.queue_free()
+	current_head = null
 
 func _on_checkpoint_reached(checkpoint_index: int):
 	if checkpoint_index < spawn_points.size():
@@ -94,6 +91,9 @@ func _on_game_over():
 	if current_head and is_instance_valid(current_head):
 		current_head.queue_free()
 		current_head = null
+	
+	while not tail_list.is_empty():
+		_remove_back_tail()
 		
 		
 func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
@@ -109,44 +109,38 @@ func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
 		EventBus.emit_signal("bell_changed", new_tail)
 	
 	tail_list.append(new_tail)
-	size = tail_list.size()
 	
-	if size > max_size:
-		var old_bell: Tail = tail_list.pop_front()
-		old_bell.queue_free()
-		EventBus.emit_signal("bell_changed", tail_list[0])
-		max_size+=1
-	
+	spawn_immunity = false
 	print("Tail spawned at: ", previous_cell)
 
 func _on_head_on_tail_collision(tail_object: Tail):
 	print("head touched tail, bell status: ", tail_object.is_bell)
-	
+
 	# Reset the entire tail list
 	if(tail_object.is_bell):
 		EventBus.emit_signal("bell_touched")
-		while not tail_list.is_empty():
-			_remove_back_tail()
+		EventBus.emit_signal("size_changed", reset_min_size)
+		beat_count = -beats_before_time_damage
 		
 	# Reset to the tail behind the tail object touched
 	else:
 		EventBus.emit_signal("tail_touched")
-		var index_to_reset: int = tail_list.find(tail_object) + 1
-		var tail_to_reset: Tail = tail_list[min(max_size, index_to_reset)]
-		
-		var old_bell: Tail = _remove_back_tail()
-		while old_bell != tail_to_reset or tail_list.is_empty():
-			old_bell = _remove_back_tail()
-		
-		EventBus.emit_signal("bell_changed", tail_list[0])
+		var index_to_reset: int = tail_list.find(tail_object) + 2
+		EventBus.emit_signal("size_changed", tail_list.size() - index_to_reset)
+		beat_count = 0
 
-	max_size = default_size
-	size = tail_list.size()
+func _on_size_changed(new_size: int):
+	while tail_list.size() > new_size or tail_list.is_empty():
+		_remove_back_tail()
+	
+	if tail_list.size() > 0:
+		EventBus.emit_signal("bell_changed", tail_list[0])
 
 func _on_head_on_wall_collision():
 	EventBus.emit_signal("wall_touched")
 	var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
 	EventBus.emit_signal("rollback_head", head_cell)
+	take_size_damage(1)
 	
 func _remove_back_tail() -> Tail:
 	var old_bell: Tail = tail_list.pop_front()
@@ -166,13 +160,28 @@ func _remove_front_tail() -> Tail:
 func get_player() -> Area2D:
 	return current_head
 
-func take_damage(amount: int):
-	max_size -= amount
-	max_size = max(0, max_size)
-	EventBus.emit_signal("player_health_changed", size, max_size)
+func _on_beat():
+	beat_count +=1
+	if beat_count>0 and beat_count % 4 == 0:
+		take_size_damage(1)
 	
-	if max_size <= 0:
-		die()
+func _on_false_movement_damage(_input):
+	take_size_damage(1)
+
+func take_default_size_damage(amount: int):
+	beats_before_time_damage -= amount
+	beats_before_time_damage = max(3, beats_before_time_damage)
+	EventBus.emit_signal("default_size_changed", beats_before_time_damage)
+
+func take_size_damage(amount: int):
+	if not spawn_immunity:
+		var next_size = tail_list.size() - amount
+		next_size = max(0, next_size)
+		if next_size <=0:
+			die()
+		else:
+			beat_count=0
+			EventBus.emit_signal("size_changed", next_size)
 
 func die():
 	is_alive = false
@@ -180,6 +189,5 @@ func die():
 	EventBus.emit_signal("play_sfx", "player_death")
 
 func _on_respawned():
-	size = 0
 	is_alive = true
-	# global_position = Vector2.ZERO  # Or spawn point
+	spawn_player()

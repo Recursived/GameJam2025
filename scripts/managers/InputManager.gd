@@ -10,6 +10,14 @@ var max_history_size: int = 100
 var input_enabled: bool = true
 var input_context: String = "game"
 
+var movement_inputs: Array = [
+		"ui_up",
+		"ui_down",
+		"ui_left",
+		"ui_right"
+	]
+	
+
 func _ready():
 	print("InputManager initialized")
 

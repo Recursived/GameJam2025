@@ -106,6 +106,7 @@ func _on_player_died():
 		game_over()
 	else:
 		# Respawn player
+		await get_tree().create_timer(1.0).timeout
 		EventBus.emit_signal("player_respawned")
 
 func save_high_score():
