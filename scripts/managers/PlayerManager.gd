@@ -72,6 +72,7 @@ func spawn_player():
 	
 	var current_spawn_cell: Vector2 = spawn_points[current_spawn_index]
 	current_head.init_spawn_cell(current_spawn_cell)
+	current_head.init_head()
 	
 	beat_count = -beats_before_time_damage
 	spawn_immunity = true
@@ -140,7 +141,7 @@ func _on_head_on_wall_collision():
 	EventBus.emit_signal("wall_touched")
 	var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
 	EventBus.emit_signal("rollback_head", head_cell)
-	take_size_damage(1)
+	EventBus.emit_signal("size_changed", 3)
 	
 func _remove_back_tail() -> Tail:
 	var old_bell: Tail = tail_list.pop_front()
