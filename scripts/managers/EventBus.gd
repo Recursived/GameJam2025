@@ -20,7 +20,8 @@ signal score_changed(new_score: int)
 #region Player Events
 signal player_died
 signal player_respawned
-signal player_health_changed(health: int, max_size: int)
+signal default_size_changed(default_size: int)
+signal size_changed(new_size: int)
 signal head_cell_changed(previous_cell: Vector2, next_cell: Vector2)
 signal bell_changed(tail_object: Tail)
 signal head_on_tail_collision(tail_object: Tail)
@@ -60,6 +61,13 @@ signal scene_transition_completed(scene_name: String)
 #region Item/Collectible Events
 signal item_collected(item_type: String, value: int)
 signal powerup_activated(powerup_type: String)
+#endregion
+
+#region Clock Events
+signal beat_triggered
+signal quarter_beat_triggered
+signal movement_input_on_beat(input: String)
+signal movement_input_not_on_beat(input: String)
 #endregion
 
 func _ready():

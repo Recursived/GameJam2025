@@ -6,7 +6,7 @@ var next_cell:Vector2 = Vector2.ZERO
 
 func _ready():
 	EventBus.connect("rollback_head", on_rollback_head)
-	EventBus.connect("input_buffer_action", trigger_next_move)
+	EventBus.connect("movement_input_on_beat", trigger_next_move)
 	self.connect("area_entered", _on_head_collide)
 	self.connect("body_entered", _on_head_collide)
 
