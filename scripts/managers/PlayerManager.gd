@@ -9,12 +9,12 @@ var current_head: Area2D
 var tail_list: Array[Tail]
 var spawn_points: Array[Vector2] = [Vector2(3,3)]
 var current_spawn_index: int = 0
-var beats_before_time_damage: int = 12
-var spawn_immunity: bool = true
 var reset_min_size: int = 3
 var is_alive: bool
 var next_move:int = -1
 var beat_count:int = 0
+var default_health:int = 3
+var health:int = 0
 
 func _ready():
 	# Load head scene at startup
@@ -26,14 +26,11 @@ func _ready():
 	
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("player_died", _on_player_died)
-	EventBus.connect("game_over", _on_game_over)
 	EventBus.connect("head_cell_changed", _on_player_movement)
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("player_respawned", _on_respawned)
 	EventBus.connect("head_on_tail_collision", _on_head_on_tail_collision)
 	EventBus.connect("head_on_wall_collision", _on_head_on_wall_collision)
-	EventBus.connect("beat_triggered", _on_beat)
-	EventBus.connect("movement_input_not_on_beat", _on_false_movement_damage)
 	EventBus.connect("size_changed", _on_size_changed)
 	print("PlayerManager initialized")
 
@@ -74,8 +71,8 @@ func spawn_player():
 	current_head.init_spawn_cell(current_spawn_cell)
 	current_head.init_head()
 	
-	beat_count = -beats_before_time_damage
-	spawn_immunity = true
+	health = default_health
+	is_alive = true
 	print("Player spawned at: ", current_spawn_cell)
 
 func _on_player_died():
@@ -88,14 +85,6 @@ func _on_checkpoint_reached(checkpoint_index: int):
 	if checkpoint_index < spawn_points.size():
 		current_spawn_index = checkpoint_index
 
-func _on_game_over():
-	if current_head and is_instance_valid(current_head):
-		current_head.queue_free()
-		current_head = null
-	
-	while not tail_list.is_empty():
-		_remove_back_tail()
-		
 		
 func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
 	if not tail_scene:
@@ -110,8 +99,7 @@ func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
 		EventBus.emit_signal("bell_changed", new_tail)
 	
 	tail_list.append(new_tail)
-	
-	spawn_immunity = false
+
 	print("Tail spawned at: ", previous_cell)
 
 func _on_head_on_tail_collision(tail_object: Tail):
@@ -121,7 +109,6 @@ func _on_head_on_tail_collision(tail_object: Tail):
 	if(tail_object.is_bell):
 		EventBus.emit_signal("bell_touched")
 		EventBus.emit_signal("size_changed", reset_min_size)
-		beat_count = -beats_before_time_damage
 		
 	# Reset to the tail behind the tail object touched
 	else:
@@ -138,10 +125,12 @@ func _on_size_changed(new_size: int):
 		EventBus.emit_signal("bell_changed", tail_list[0])
 
 func _on_head_on_wall_collision():
-	EventBus.emit_signal("wall_touched")
-	var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
-	EventBus.emit_signal("rollback_head", head_cell)
-	EventBus.emit_signal("size_changed", 3)
+	take_damage(1)
+	if is_alive:
+		EventBus.emit_signal("wall_touched")
+		var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
+		EventBus.emit_signal("rollback_head", head_cell)
+		EventBus.emit_signal("size_changed", reset_min_size)
 	
 func _remove_back_tail() -> Tail:
 	var old_bell: Tail = tail_list.pop_front()
@@ -161,30 +150,10 @@ func _remove_front_tail() -> Tail:
 func get_player() -> Area2D:
 	return current_head
 
-func _on_beat():
-	beat_count +=1
-	if beat_count>0 and beat_count % 4 == 0:
-		pass
-		#Removed this because it made the game too hard
-		#take_size_damage(1)
-	
-func _on_false_movement_damage(_input):
-	take_size_damage(1)
-
-func take_default_size_damage(amount: int):
-	beats_before_time_damage -= amount
-	beats_before_time_damage = max(3, beats_before_time_damage)
-	EventBus.emit_signal("default_size_changed", beats_before_time_damage)
-
-func take_size_damage(amount: int):
-	if not spawn_immunity:
-		var next_size = tail_list.size() - amount
-		next_size = max(0, next_size)
-		if next_size <=0:
-			die()
-		else:
-			beat_count=0
-			EventBus.emit_signal("size_changed", next_size)
+func take_damage(amount: int):
+	health-=1
+	if health <= 0:
+		die()
 
 func die():
 	is_alive = false
@@ -192,5 +161,4 @@ func die():
 	EventBus.emit_signal("play_sfx", "player_death")
 
 func _on_respawned():
-	is_alive = true
 	spawn_player()

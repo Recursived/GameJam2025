@@ -16,9 +16,6 @@ func _ready():
 	wait_time = 1/(bpm/60)
 	EventBus.connect("game_started", _on_game_started)
 	
-	#Connect to use action on beat
-	#EventBus.connect("input_buffer_action", _on_input)
-	
 func _process(delta: float) -> void:
 	pass
 
@@ -41,35 +38,7 @@ func _on_game_started():
 	clock_instance_eight.connect("timeout", _on_eight_beat)
 
 func _on_beat():
-	_set_beat_time()
-	#EventBus.emit_signal("play_sfx", "button_click", 1.0)
 	EventBus.emit_signal("beat_triggered")
 
 func _on_eight_beat():
-	_set_beat_time()
-	#EventBus.emit_signal("play_sfx", "button_click", 1.0)
 	EventBus.emit_signal("eight_beat_triggered")
-
-func _set_beat_time():
-	last_beat_time = Time.get_ticks_msec()
-	
-func get_offset_time() -> int:
-	return Time.get_ticks_msec() - last_beat_time
-
-func _on_input(input: String):
-	var is_input_on_beat = _is_on_beat()
-	print("is input on beat: ", is_input_on_beat)
-	if input in InputManager.movement_inputs:
-		if is_input_on_beat:
-			EventBus.emit_signal("movement_input_on_beat", input)
-		else:
-			EventBus.emit_signal("movement_input_not_on_beat", input)
-
-func _is_on_beat() -> bool:
-	var delay = get_offset_time()
-	print("Input delay with the beat: ", delay)
-	var seconds_between_beats :int = wait_time * 1000
-	var accepted_delay: int = seconds_between_beats/4
-	var is_after_beat = delay < accepted_delay and delay >= 0
-	var is_before_beat = delay > seconds_between_beats-accepted_delay and delay <= seconds_between_beats 
-	return is_before_beat or is_after_beat

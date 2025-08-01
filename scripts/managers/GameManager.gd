@@ -96,6 +96,8 @@ func set_time_scale(scale: float):
 
 func _on_game_over():
 	print("Game Over! Final Score: ", score)
+	current_state = GameState.MENU
+	SceneManager.change_scene("StartScreen", true)
 
 func _on_score_changed(new_score: int):
 	print("Score: ", new_score)
