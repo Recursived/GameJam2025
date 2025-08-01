@@ -11,8 +11,6 @@ var spawn_points: Array[Vector2] = [Vector2(3,3)]
 var current_spawn_index: int = 0
 var reset_min_size: int = 3
 var is_alive: bool
-var next_move:int = -1
-var beat_count:int = 0
 var default_health:int = 3
 var health:int = 0
 
@@ -115,7 +113,6 @@ func _on_head_on_tail_collision(tail_object: Tail):
 		EventBus.emit_signal("tail_touched")
 		var index_to_reset: int = tail_list.find(tail_object) + 2
 		EventBus.emit_signal("size_changed", tail_list.size() - index_to_reset)
-		beat_count = 0
 
 func _on_size_changed(new_size: int):
 	while tail_list.size() > new_size or tail_list.is_empty():
