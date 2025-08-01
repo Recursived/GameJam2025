@@ -3,7 +3,6 @@ extends Area2D
 
 var previous_cell:Vector2 = Vector2.ZERO
 var next_cell:Vector2 = Vector2.ZERO
-var collided:bool = false
 var current_input:String
 
 func _ready():
@@ -55,7 +54,6 @@ func _on_head_collide(object):
 	if is_instance_of(object, Tail):
 		EventBus.emit_signal("head_on_tail_collision", object)
 	else:
-		collided = true
 		EventBus.emit_signal("head_on_wall_collision")
 
 func on_rollback_head(new_cell: Vector2):
