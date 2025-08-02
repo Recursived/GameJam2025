@@ -7,7 +7,7 @@ var head_scene: PackedScene
 var tail_scene: PackedScene
 var current_head: Area2D
 var tail_list: Array[Tail]
-var spawn_points: Array[Vector2] = [Vector2(3,3)]
+var spawn_points: Array[Vector2] = [Vector2(20,20)]
 var current_spawn_index: int = 0
 var reset_min_size: int = 3
 var is_alive: bool
@@ -105,7 +105,8 @@ func _on_head_on_tail_collision(tail_object: Tail):
 
 	# Reset the entire tail list
 	if(tail_object.is_bell):
-		EventBus.emit_signal("bell_touched")
+		var polygon_2d: Polygon2D = _get_polygon_from_tail()
+		EventBus.emit_signal("bell_touched", polygon_2d)
 		EventBus.emit_signal("size_changed", reset_min_size)
 		
 	# Reset to the tail behind the tail object touched
@@ -113,6 +114,16 @@ func _on_head_on_tail_collision(tail_object: Tail):
 		EventBus.emit_signal("tail_touched")
 		var index_to_reset: int = tail_list.find(tail_object) + 2
 		EventBus.emit_signal("size_changed", tail_list.size() - index_to_reset)
+
+func _get_polygon_from_tail() -> Polygon2D:
+	var polygon: PackedVector2Array = []
+	for tail in tail_list:
+		var point: Vector2 = tail.get_center_point()
+		polygon.append(point)
+	
+	var polygon_2d : Polygon2D = Polygon2D.new()
+	polygon_2d.polygon = polygon
+	return polygon_2d
 
 func _on_size_changed(new_size: int):
 	while tail_list.size() > new_size or tail_list.is_empty():

@@ -27,7 +27,7 @@ signal bell_changed(tail_object: Tail)
 signal head_on_tail_collision(tail_object: Tail)
 signal head_on_wall_collision
 signal rollback_head(new_cell: Vector2)
-signal bell_touched
+signal bell_touched(polygon: Polygon2D)
 signal tail_touched
 signal wall_touched
 signal head_rollbacked
