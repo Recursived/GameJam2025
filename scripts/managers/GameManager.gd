@@ -1,5 +1,8 @@
 extends Node
 
+const JSON_PATH = "res://scenes/level/%s/%s"
+var enemies: Array = []
+
 enum GameState {
 	MENU,
 	PLAYING,
@@ -44,14 +47,44 @@ func set_level(level: int):
 func load_game():
 	EventBus.emit_signal("game_loaded")
 
+func load_json(level:int):
+	if not FileAccess.file_exists(JSON_PATH % ["level"+str(level), "level_data.json"]):
+		return
+	var file = FileAccess.open(
+		JSON_PATH % ["level"+str(level), "level_data.json"],
+		FileAccess.READ
+	)
+	var data = JSON.parse_string(file.get_as_text())
+	return data
+
+func load_spawn_points(json_data):
+	var spawns_data = json_data["spawns"]
+	var spawns: Array[Vector2] = []
+	for spawn in spawns_data:
+		spawns.append(Vector2(spawn[0],spawn[1]))
+	PlayerManager.set_spawn_points(spawns)
+
+func load_enemies(json_data):
+	enemies = []
+	var enemies_data = json_data["enemies"]
+	for enemy in enemies_data:
+		enemies.append({
+			"x": enemy["x"],
+			"y": enemy["y"],
+			"width": enemy["width"],
+			"height": enemy["height"],
+			"type": enemy["type"]
+		})
+
+	
 func load_level():
 	TileMapManager.load_floor_scene(current_level)
 	TileMapManager.load_walls_scene(current_level)
-	TileMapManager.load_spawns_scene(current_level)
-	TileMapManager.load_enemies_scene(current_level)
 	TileMapManager.instanciate_tile_maps()
-	PlayerManager.set_spawn_points()
-
+	var json_data = load_json(current_level)
+	load_spawn_points(json_data)
+	load_enemies(json_data)
+	
 func start_game():
 	load_level()
 	current_state = GameState.PLAYING

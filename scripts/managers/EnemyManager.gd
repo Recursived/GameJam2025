@@ -1,5 +1,11 @@
 extends Node
 
+const string_to_type = {
+	"STATIC":EnemyType.STATIC,
+	"MOVING":EnemyType.MOVING,
+	"RANDOM":EnemyType.RANDOM,
+	"KAMIKAZE":EnemyType.KAMIKAZE,
+}
 
 enum EnemyType {
 	STATIC,
@@ -23,7 +29,7 @@ func _ready() -> void:
 func _on_game_started():
 	list_enemies = []
 	var enemy_scene = load("res://scenes/game/Enemy.tscn")
-	var enemies = TileMapManager.get_enemies()
+	var enemies = GameManager.enemies
 	if enemy_scene:
 		for enemy in enemies:
 			add_enemy(
@@ -32,7 +38,7 @@ func _on_game_started():
 				enemy["y"],
 				enemy["width"],
 				enemy["height"], 
-				enemy["type"]
+				string_to_type[enemy["type"]]
 			)
 
 func add_enemy(enemy_scene, x, y, width, height, enemy_type):
