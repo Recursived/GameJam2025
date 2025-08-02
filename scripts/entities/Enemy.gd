@@ -160,6 +160,9 @@ func move_enemy_type_moving():
 	position = TileMapManager.cell_to_position(neighbour)
 	current_wait_time = 0  # Reset cooldown after moving
 
+	update_path_index()
+
+func update_path_index():
 	# Ping-pong path index
 	if path_forward:
 		path_index += 1
@@ -193,11 +196,9 @@ func rollback_move():
 	if last_position:
 		position =  TileMapManager.cell_to_position(last_position)
 		current_wait_time = 0
-		if enemy_type == EnemyManager.EnemyType.MOVING:
-			path_forward = !path_forward
 		if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
 			current_direction = get_kamikaze_rollback_direction(current_direction)
-		move()
+			move()
 	
 	
 
