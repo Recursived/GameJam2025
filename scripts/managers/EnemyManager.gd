@@ -16,7 +16,7 @@ var list_enemies: Array[Enemy] = []
 func _ready() -> void:
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("bell_touched", _on_bell_touched)
-  EventBus.connect("beat_triggered", on_move_enemies)
+	EventBus.connect("beat_triggered", on_move_enemies)
 	print("EnemyManager initialized")
 	
 	
@@ -61,4 +61,3 @@ func _on_bell_touched(polygon_2d: Polygon2D):
 	list_enemies = new_enemy_list
 	if list_enemies.is_empty():
 		EventBus.emit_signal("game_won")
-
