@@ -37,6 +37,7 @@ signal bell_touched(polygon: Polygon2D)
 signal tail_touched
 signal wall_touched
 signal head_rollbacked
+signal took_damage
 #endregion
 
 #region Player Events
