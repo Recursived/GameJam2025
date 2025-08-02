@@ -10,3 +10,8 @@ func _on_start_game_button_pressed():
 	EventBus.emit_signal("play_sfx", "button_click", 1.0)
 	
 	
+
+
+func _on_texture_button_pressed():
+	SceneManager.change_scene("Main", true)
+	EventBus.emit_signal("play_sfx", "button_click", 1.0)

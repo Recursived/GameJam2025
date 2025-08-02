@@ -1,7 +1,341 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfv0c8yaehgum"]
+[gd_scene load_steps=19 format=3 uid="uid://dfv0c8yaehgum"]
 
 [ext_resource type="Theme" uid="uid://cm0hkx0yeq7ia" path="res://themes/main_theme.tres" id="1_768s1"]
 [ext_resource type="Script" uid="uid://bshopclps5cti" path="res://scripts/ui/StartScreen.gd" id="2_40q1t"]
+[ext_resource type="Texture2D" uid="uid://cs6xbybe0ocb8" path="res://resources/startScreen/play.png" id="3_uo0jk"]
+[ext_resource type="Texture2D" uid="uid://bpiwc5rk3rex3" path="res://resources/startScreen/cadre_snek.png" id="4_0lnxs"]
+[ext_resource type="Texture2D" uid="uid://dyhsax2p1ghf0" path="res://resources/startScreen/snek.png" id="5_6r2h5"]
+[ext_resource type="Script" uid="uid://cq07kk2jw2ket" path="res://scenes/UI/buttons.gd" id="6_ciplo"]
+[ext_resource type="Texture2D" uid="uid://bdoi0c5l3k5s" path="res://resources/startScreen/acueil.png" id="6_ifie5"]
+[ext_resource type="Texture2D" uid="uid://btx43yvfkr3wk" path="res://resources/startScreen/dune_cinquieme_plan.png" id="6_rqfem"]
+[ext_resource type="Texture2D" uid="uid://5bg1gflelp6t" path="res://resources/startScreen/dune_quatrieme_plan.png" id="7_l6tu6"]
+[ext_resource type="Texture2D" uid="uid://b4spumv3oeb2x" path="res://resources/startScreen/dune_droite.png" id="7_yn50r"]
+[ext_resource type="Texture2D" uid="uid://drui5bfxmk8g" path="res://resources/startScreen/dune_quatrieme_plan_droite.png" id="8_ciplo"]
+[ext_resource type="Texture2D" uid="uid://ce8pknabwmopj" path="res://resources/startScreen/dune_gauche.png" id="8_f4bl7"]
+[ext_resource type="Texture2D" uid="uid://b2tmtnjs0qgjm" path="res://resources/startScreen/arriere_plan.png" id="9_f4bl7"]
+[ext_resource type="Texture2D" uid="uid://dxgnjw3gjj8nl" path="res://resources/startScreen/dune_troisieme_plan.png" id="9_q65bo"]
+[ext_resource type="Texture2D" uid="uid://c8malgcg2sb2g" path="res://resources/startScreen/dune_second_plan.png" id="10_ltmx6"]
+
+[sub_resource type="Animation" id="Animation_ciplo"]
+resource_name = "dune_1"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DuneGauche:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.353553, 0.353553),
+"update": 0,
+"values": [Vector2(127, 1100), Vector2(131, 527)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DuneDroite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0223609, 0.633333),
+"transitions": PackedFloat32Array(0.183011, 0.183011),
+"update": 0,
+"values": [Vector2(1257, 1000), Vector2(1257, 619)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DuneSecondPlan:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.666667),
+"transitions": PackedFloat32Array(0.164938, 0.164938),
+"update": 0,
+"values": [Vector2(776, 900), Vector2(776, 616)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DuneTroisiemePlan:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DuneTroisiemePlan:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.14141, 0.7),
+"transitions": PackedFloat32Array(0.164938, 0.164938),
+"update": 0,
+"values": [Vector2(63, 1100), Vector2(63, 586)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DuneQuatriemePlanDroite:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.177143, 0.733333),
+"transitions": PackedFloat32Array(0.164938, 0.164938),
+"update": 0,
+"values": [Vector2(1211, 1100), Vector2(1211, 699)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DuneQuatriemePlan:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.216677, 0.8),
+"transitions": PackedFloat32Array(0.164938, 0.164938),
+"update": 0,
+"values": [Vector2(513, 1100), Vector2(513, 602)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DuneCinquiemePlan:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.3, 0.866667),
+"transitions": PackedFloat32Array(0.138696, 0.138696),
+"update": 0,
+"values": [Vector2(1094, 1100), Vector2(1094, 569)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Acueil:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.414609, 1.03333),
+"transitions": PackedFloat32Array(0.5, -2),
+"update": 0,
+"values": [Vector2(360, 800), Vector2(360, 241)]
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("play:position:x")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-600, -0.25, 0, 0.25, 0, -13, -0.551789, 223.5, 0.25, 0),
+"times": PackedFloat32Array(1.07436, 1.71696)
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("play:position:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(235, -0.25, 0, 0.25, 0, 235, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(1.07436, 1.7)
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CadreSnek:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.627195, 1.26667),
+"transitions": PackedFloat32Array(0.189465, 0.189465),
+"update": 0,
+"values": [Vector2(1900, 388), Vector2(1066, 388)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Snek:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0.794398, 1.39625),
+"transitions": PackedFloat32Array(0.210224, 0.210224),
+"update": 0,
+"values": [Vector2(1600, 352), Vector2(983, 352)]
+}
+
+[sub_resource type="Animation" id="Animation_q65bo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DuneGauche:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(131, 561)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DuneDroite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1257, 619)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DuneSecondPlan:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(776, 616)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DuneTroisiemePlan:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_q65bo")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DuneTroisiemePlan:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(63, 586)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DuneQuatriemePlanDroite:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1211, 699)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DuneQuatriemePlan:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(513, 602)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DuneCinquiemePlan:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1094, 569)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Acueil:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(360, 241)]
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("play:position:x")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-13, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("play:position:y")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(235, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CadreSnek:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1066, 388)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Snek:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(983, 352)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ltmx6"]
+_data = {
+&"RESET": SubResource("Animation_q65bo"),
+&"dune_1": SubResource("Animation_ciplo")
+}
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
@@ -15,24 +349,79 @@ offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0.547237, 0.376617, 0.253798, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
-theme = ExtResource("1_768s1")
-alignment = 1
+offset_left = -86.0
+offset_top = -70.0
+offset_right = 2328.0
+offset_bottom = 1424.0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("9_f4bl7")
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="play" type="TextureButton" parent="."]
 layout_mode = 2
-theme = ExtResource("1_768s1")
-theme_override_font_sizes/font_size = 50
-text = "Ouroboboy"
-horizontal_alignment = 1
+offset_left = -13.0
+offset_top = 235.0
+offset_right = 734.0
+offset_bottom = 474.0
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(373.5, 119.5)
+texture_normal = ExtResource("3_uo0jk")
+script = ExtResource("6_ciplo")
 
-[node name="Button" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_768s1")
-theme_override_font_sizes/font_size = 50
-text = "Start game"
+[node name="DuneCinquiemePlan" type="Sprite2D" parent="."]
+position = Vector2(1094, 569)
+scale = Vector2(1.1468, 1.1906)
+texture = ExtResource("6_rqfem")
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_start_game_button_pressed"]
+[node name="DuneQuatriemePlan" type="Sprite2D" parent="."]
+position = Vector2(513, 602)
+scale = Vector2(0.645299, 0.645299)
+texture = ExtResource("7_l6tu6")
+
+[node name="Acueil" type="Sprite2D" parent="."]
+position = Vector2(360, 241)
+scale = Vector2(0.476872, 0.476872)
+texture = ExtResource("6_ifie5")
+
+[node name="DuneQuatriemePlanDroite" type="Sprite2D" parent="."]
+position = Vector2(1211, 699)
+texture = ExtResource("8_ciplo")
+
+[node name="DuneTroisiemePlan" type="Sprite2D" parent="."]
+position = Vector2(63, 586)
+scale = Vector2(0.469194, 0.469194)
+texture = ExtResource("9_q65bo")
+
+[node name="DuneSecondPlan" type="Sprite2D" parent="."]
+position = Vector2(776, 616)
+scale = Vector2(0.572742, 0.572742)
+texture = ExtResource("10_ltmx6")
+
+[node name="CadreSnek" type="Sprite2D" parent="."]
+position = Vector2(1066, 388)
+scale = Vector2(0.580499, 0.580499)
+texture = ExtResource("4_0lnxs")
+
+[node name="Snek" type="Sprite2D" parent="."]
+position = Vector2(983, 352)
+scale = Vector2(0.31277, 0.318108)
+texture = ExtResource("5_6r2h5")
+
+[node name="DuneDroite" type="Sprite2D" parent="."]
+position = Vector2(1257, 619)
+scale = Vector2(0.446984, 0.446983)
+texture = ExtResource("7_yn50r")
+
+[node name="DuneGauche" type="Sprite2D" parent="."]
+position = Vector2(131, 561)
+scale = Vector2(0.335357, 0.335357)
+texture = ExtResource("8_f4bl7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ltmx6")
+}
+autoplay = "dune_1"
+
+[connection signal="pressed" from="play" to="." method="_on_texture_button_pressed"]
