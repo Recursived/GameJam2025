@@ -72,11 +72,12 @@ func _on_head_collide(object):
 		EventBus.emit_signal("head_on_wall_collision")
 
 func on_rollback_head(new_cell: Vector2):
-	EventBus.emit_signal("head_rollbacked")
-	is_moving = false
-	position = TileMapManager.cell_to_position(new_cell)
-	var last_tail_inputs = PlayerManager.get_last_tail_inputs()
-	previous_input = last_tail_inputs["next_input"]
-	next_input = last_tail_inputs["next_input"]
-	previous_cell = new_cell
-	next_cell = new_cell
+	if is_moving:
+		EventBus.emit_signal("head_rollbacked")
+		is_moving = false
+		position = TileMapManager.cell_to_position(new_cell)
+		var last_tail_inputs = PlayerManager.get_last_tail_inputs()
+		previous_input = last_tail_inputs["next_input"]
+		next_input = last_tail_inputs["next_input"]
+		previous_cell = new_cell
+		next_cell = new_cell

@@ -178,9 +178,10 @@ func _on_head_on_wall_collision():
 	take_damage(1)
 	if is_alive:
 		EventBus.emit_signal("wall_touched")
-		var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
-		EventBus.emit_signal("rollback_head", head_cell)
-		EventBus.emit_signal("size_changed", reset_min_size)
+		if current_head.is_moving:
+			var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
+			EventBus.emit_signal("rollback_head", head_cell)
+			EventBus.emit_signal("size_changed", reset_min_size)
 	
 func _remove_back_tail() -> Tail:
 	var old_bell: Tail = tail_list.pop_front()
