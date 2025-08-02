@@ -10,11 +10,25 @@ var max_history_size: int = 100
 var input_enabled: bool = true
 var input_context: String = "game"
 
+const input_contrary = {
+	"ui_left":"ui_right",
+	"ui_right":"ui_left",
+	"ui_down":"ui_up",
+	"ui_up":"ui_down"
+}
+
 const input_code_to_char = {
 	"R":"ui_right",
 	"L":"ui_left",
 	"U":"ui_up",
 	"D":"ui_down"
+}
+
+const input_code_to_direction = {
+	"R":TileSet.CELL_NEIGHBOR_RIGHT_SIDE,
+	"L":TileSet.CELL_NEIGHBOR_LEFT_SIDE,
+	"U":TileSet.CELL_NEIGHBOR_TOP_SIDE,
+	"D":TileSet.CELL_NEIGHBOR_BOTTOM_SIDE
 }
 
 const input_code_to_sprite = {

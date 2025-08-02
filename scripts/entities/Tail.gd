@@ -36,8 +36,8 @@ func set_input_state(previous_input: String, current_input: String):
 func set_is_odd(odd: bool):
 	is_odd = odd
 
-func _on_quarter_beat(quarter_beat_modulo: int):
+func _on_quarter_beat(quarter_beat_number: int):
 	if is_odd:
-		sprite.frame = quarter_beat_modulo
+		sprite.frame = quarter_beat_number % 7
 	else:
-		sprite.frame = 7 - quarter_beat_modulo
+		sprite.frame = 7 - (quarter_beat_number%7)

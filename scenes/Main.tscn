@@ -6,4 +6,5 @@
 script = ExtResource("1_elqb8")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(640, 360)
+offset = Vector2(320, 180)
+zoom = Vector2(2, 2)

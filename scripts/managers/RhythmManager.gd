@@ -21,6 +21,10 @@ func _ready():
 func _process(delta: float) -> void:
 	pass
 
+func set_bpm(bpm_param: int):
+	bpm = bpm_param
+	wait_time = 1/(bpm/60)
+
 func load_clock_scene():
 	clock_scene = load(CLOCK_SCENE_PATH)
 	if not clock_scene:
@@ -53,7 +57,7 @@ func _on_beat():
 
 func _on_quarter_beat():
 	clock_quarter_current_beat+=1
-	EventBus.emit_signal("quarter_beat_triggered", clock_quarter_current_beat%4)
+	EventBus.emit_signal("quarter_beat_triggered", clock_quarter_current_beat)
 
 func _on_eight_beat():
 	EventBus.emit_signal("eight_beat_triggered")

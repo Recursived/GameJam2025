@@ -5,7 +5,7 @@ signal enemy_collided(body)
 
 #region common variables
 var enemy_type : EnemyManager.EnemyType = EnemyManager.EnemyType.STATIC
-var cooldown_move : int = 1
+var cooldown_move : int = 0
 var current_wait_time: int = 0
 var last_position : Vector2 = Vector2.ZERO
 var is_alive: bool = true
@@ -18,7 +18,13 @@ var path_forward: bool = true
 #endregion
 
 #region kamikaze type variables
+const turn_on_collide_options={
+	"CLOCKWISE"="clockwise",
+	"COUNTER_CLOCKWISE"="counter_clockwise",
+	"REVERSE"="reverse"
+}
 var current_direction : TileSet.CellNeighbor = TileSet.CellNeighbor.CELL_NEIGHBOR_BOTTOM_SIDE
+var turn_on_collide: String = turn_on_collide_options["REVERSE"]
 #endregion
 
 func _ready():
@@ -31,7 +37,7 @@ func _process(delta: float) -> void:
 		self.queue_free()
 
 
-func initialize(origin: Vector2, type: EnemyManager.EnemyType):
+func initialize(origin: Vector2, type: EnemyManager.EnemyType, args: Dictionary):
 	position = TileMapManager.cell_to_position(origin)
 	enemy_type = type
 	is_alive= true
@@ -39,11 +45,12 @@ func initialize(origin: Vector2, type: EnemyManager.EnemyType):
 	match enemy_type:
 		EnemyManager.EnemyType.MOVING:
 		# We generate an array of four direction that the enemy will always follow 
-			for i in range(4):
-				var direction_pick = get_random_direction()
-				path_to_follow.append(direction_pick)
+			var pattern = args["pattern"]
+			for move in pattern:
+				path_to_follow.append(InputManager.input_code_to_direction[move])
 		EnemyManager.EnemyType.KAMIKAZE:
-			current_direction = get_random_direction()
+			current_direction = InputManager.input_code_to_direction[args["direction"]]
+			turn_on_collide = args["turn_on_collide"]
 	
 
 
@@ -80,9 +87,9 @@ func move():
 			
 			
 
-func _on_quarter_beat(quarter_beat_modulo: int):
+func _on_quarter_beat(quarter_beat_number: int):
 	if is_alive:
-		sprite.frame = quarter_beat_modulo
+		sprite.frame = quarter_beat_number%4
 
 func die():
 	sprite.animation = "death"
@@ -110,16 +117,18 @@ func get_opposite_direction(direction):
 			return direction
 
 
-func get_rotated_direction_90(direction: TileSet.CellNeighbor, clockwise: bool = true) -> TileSet.CellNeighbor:
+func get_kamikaze_rollback_direction(direction: TileSet.CellNeighbor) -> TileSet.CellNeighbor:
 	# Assumes directions are: TOP, RIGHT, BOTTOM, LEFT
 	var directions = [TileSet.CELL_NEIGHBOR_TOP_SIDE, TileSet.CELL_NEIGHBOR_RIGHT_SIDE, TileSet.CELL_NEIGHBOR_BOTTOM_SIDE, TileSet.CELL_NEIGHBOR_LEFT_SIDE]
 	var idx = directions.find(direction)
 	if idx == -1:
 		return direction
-	if clockwise:
+	if turn_on_collide == "clockwise":
 		return directions[(idx + 1) % directions.size()]
-	else:
+	elif turn_on_collide == "counter_clockwise":
 		return directions[(idx - 1 + directions.size()) % directions.size()]
+	else:
+		return directions[(idx + 2) % directions.size()]
 #endregion
 
 func on_trigger_next_move():
@@ -184,8 +193,11 @@ func rollback_move():
 	if last_position:
 		position =  TileMapManager.cell_to_position(last_position)
 		current_wait_time = 0
+		if enemy_type == EnemyManager.EnemyType.MOVING:
+			path_forward = !path_forward
 		if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
-			current_direction = get_rotated_direction_90(current_direction)
+			current_direction = get_kamikaze_rollback_direction(current_direction)
+		move()
 	
 	
 

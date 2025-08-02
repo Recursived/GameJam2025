@@ -35,18 +35,17 @@ func _on_game_started():
 			add_enemy(
 				enemy_scene,
 				enemy["x"],
-				enemy["y"],
-				enemy["width"],
-				enemy["height"], 
-				string_to_type[enemy["type"]]
+				enemy["y"], 
+				string_to_type[enemy["type"]],
+				enemy["args"]
 			)
 
-func add_enemy(enemy_scene, x, y, width, height, enemy_type):
+func add_enemy(enemy_scene, x, y, enemy_type, args):
 	var instance_enemy = enemy_scene.instantiate() as Enemy
 	list_enemies.append(instance_enemy)
 	if instance_enemy is Enemy:
 		get_tree().current_scene.add_child(instance_enemy)
-		instance_enemy.initialize(Vector2(x, y), enemy_type)
+		instance_enemy.initialize(Vector2(x, y), enemy_type, args)
 
 
 func on_move_enemies():
