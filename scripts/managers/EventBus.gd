@@ -13,6 +13,7 @@ signal game_started
 signal game_paused
 signal game_resumed
 signal game_over
+signal game_won
 signal level_completed
 signal score_changed(new_score: int)
 #endregion
