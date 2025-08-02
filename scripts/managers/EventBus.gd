@@ -13,6 +13,7 @@ signal game_started
 signal game_paused
 signal game_resumed
 signal game_over
+signal game_won
 signal level_completed
 signal score_changed(new_score: int)
 #endregion
@@ -31,6 +32,10 @@ signal bell_touched(polygon: Polygon2D)
 signal tail_touched
 signal wall_touched
 signal head_rollbacked
+#endregion
+
+#region Player Events
+signal enemy_died(enemy: Node2D)
 #endregion
 
 #region UI Events

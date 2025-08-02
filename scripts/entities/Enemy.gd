@@ -129,6 +129,9 @@ func check_cooldown_is_good_for_move():
 		return false  # Skip movement if still in cooldown
 		
 	return true
+	
+func get_area_position():
+	return area_entity.origin_offset
 
 #region Typed moving function
 func move_enemy_type_moving():
