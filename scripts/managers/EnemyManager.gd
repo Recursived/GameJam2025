@@ -1,10 +1,17 @@
 extends Node
 
 const string_to_type = {
-	"STATIC":EnemyType.STATIC,
-	"MOVING":EnemyType.MOVING,
-	"RANDOM":EnemyType.RANDOM,
-	"KAMIKAZE":EnemyType.KAMIKAZE,
+	"static":EnemyType.STATIC,
+	"moving":EnemyType.MOVING,
+	"random":EnemyType.RANDOM,
+	"kamikaze":EnemyType.KAMIKAZE,
+}
+
+const type_to_string = {
+	EnemyType.STATIC:"static",
+	EnemyType.MOVING:"moving",
+	EnemyType.RANDOM:"random",
+	EnemyType.KAMIKAZE:"kamikaze",
 }
 
 enum EnemyType {
