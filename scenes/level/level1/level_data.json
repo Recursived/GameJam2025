@@ -4,7 +4,7 @@
 	"zoom":2,
 	"enemies": [
 		{
-			"type": "MOVING",
+			"type": "moving",
 			"x": 5.0,
 			"y": 5.0,
 			"args":{
@@ -12,7 +12,7 @@
 			}
 		},
 		{
-			"type": "KAMIKAZE",
+			"type": "kamikaze",
 			"x": 17.0,
 			"y": 5.0,
 			"args":{
@@ -21,7 +21,7 @@
 			}
 		}, 
 		{
-			"type": "KAMIKAZE",
+			"type": "kamikaze",
 			"x": 33,
 			"y": 6,
 			"args":{
@@ -30,13 +30,13 @@
 			}
 		},
 		{
-			"type": "STATIC",
+			"type": "static",
 			"x": 22,
 			"y": 14,
 			"args":{}
 		},
 		{
-			"type": "STATIC",
+			"type": "static",
 			"x": 20,
 			"y": 15,
 			"args":{}

@@ -42,6 +42,9 @@ func initialize(origin: Vector2, type: EnemyManager.EnemyType, args: Dictionary)
 	enemy_type = type
 	is_alive= true
 	
+	var idle_animation= "idle_%s"
+	sprite.animation = idle_animation % EnemyManager.type_to_string[type]
+	
 	match enemy_type:
 		EnemyManager.EnemyType.MOVING:
 		# We generate an array of four direction that the enemy will always follow 
@@ -52,24 +55,6 @@ func initialize(origin: Vector2, type: EnemyManager.EnemyType, args: Dictionary)
 			current_direction = InputManager.input_code_to_direction[args["direction"]]
 			turn_on_collide = args["turn_on_collide"]
 	
-
-
-func change_color_by_type():
-	# TODO: Change sprite animation according to the type 
-	
-
-	var color := Color.WHITE
-	match enemy_type:
-		EnemyManager.EnemyType.STATIC:
-			color = Color(0.8, 0.8, 0.8) # light gray
-		EnemyManager.EnemyType.MOVING:
-			color = Color(0.2, 0.6, 1.0) # blue
-		EnemyManager.EnemyType.RANDOM:
-			color = Color(1.0, 0.8, 0.2) # yellow
-		EnemyManager.EnemyType.KAMIKAZE:
-			color = Color(1.0, 0.2, 0.2) # red
-		_:
-			color = Color.WHITE
 		
 func _on_area_entity_body_entered(body : Node2D):		
 	rollback_move()
@@ -92,7 +77,8 @@ func _on_quarter_beat(quarter_beat_number: int):
 		sprite.frame = quarter_beat_number%4
 
 func die():
-	sprite.animation = "death"
+	var death_animation= "death_%s"
+	sprite.animation = death_animation % EnemyManager.type_to_string[enemy_type]
 	sprite.play()
 	is_alive = false
 
