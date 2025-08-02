@@ -65,7 +65,7 @@ func _on_bell_touched(polygon_2d: Polygon2D):
 		var enemy_pos: Vector2 = enemy.get_area_position()
 		if Geometry2D.is_point_in_polygon(enemy_pos, polygon):
 			EventBus.emit_signal("enemy_died", enemy)
-			enemy.queue_free()
+			enemy.die()
 		else:
 			new_enemy_list.append(enemy)
 	list_enemies = new_enemy_list

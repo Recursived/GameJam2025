@@ -8,6 +8,7 @@ var enemy_type : EnemyManager.EnemyType = EnemyManager.EnemyType.STATIC
 var cooldown_move : int = 1
 var current_wait_time: int = 0
 var last_position : Vector2 = Vector2.ZERO
+var is_alive: bool = true
 #endregion
 
 #region moving type variable
@@ -23,11 +24,17 @@ var current_direction : TileSet.CellNeighbor = TileSet.CellNeighbor.CELL_NEIGHBO
 func _ready():
 		self.connect("body_entered", Callable(self, "_on_area_entity_body_entered"))
 		self.connect("area_entered", Callable(self, "_on_area_entity_body_entered"))
+		EventBus.connect("quarter_beat_triggered", _on_quarter_beat)
+
+func _process(delta: float) -> void:
+	if not is_alive and not sprite.is_playing():
+		self.queue_free()
 
 
 func initialize(origin: Vector2, type: EnemyManager.EnemyType):
 	position = TileMapManager.cell_to_position(origin)
 	enemy_type = type
+	is_alive= true
 	
 	match enemy_type:
 		EnemyManager.EnemyType.MOVING:
@@ -72,6 +79,15 @@ func move():
 			move_enemy_type_kamikaze()
 			
 			
+
+func _on_quarter_beat(quarter_beat_modulo: int):
+	if is_alive:
+		sprite.frame = quarter_beat_modulo
+
+func die():
+	sprite.animation = "death"
+	sprite.play()
+	is_alive = false
 
 #region utils enemy function 
 func get_random_direction():
@@ -165,10 +181,11 @@ func move_enemy_type_kamikaze():
 	current_wait_time = 0  # Reset cooldown after moving
 
 func rollback_move():
-	position =  TileMapManager.cell_to_position(last_position)
-	current_wait_time = 0
-	if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
-		current_direction = get_rotated_direction_90(current_direction)
+	if last_position:
+		position =  TileMapManager.cell_to_position(last_position)
+		current_wait_time = 0
+		if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
+			current_direction = get_rotated_direction_90(current_direction)
 	
 	
 
