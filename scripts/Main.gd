@@ -4,6 +4,10 @@ extends Node2D
 # Main.gd
 func _ready():
 	# Initialize the main scene
+	_reload()
+	
+
+func _reload():
 	GameManager.load_game()
 	GameManager.start_game()
 	# Send viewport size to GameManager
