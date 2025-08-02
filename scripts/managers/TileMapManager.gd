@@ -60,7 +60,7 @@ func instanciate_tile_maps():
 	_tile_map_layer_enemies = enemies_scene.instantiate()
 
 func cell_to_position(cell: Vector2) -> Vector2:
-	return _tile_map_layer_floor.map_to_local(cell) - Vector2(30,30)
+	return _tile_map_layer_floor.map_to_local(cell) - Vector2(8,8)
 
 func position_to_cell(position: Vector2) -> Vector2:
 	return _tile_map_layer_floor.local_to_map(position)

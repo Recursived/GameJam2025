@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://x5epqs118dc8" path="res://scripts/entities/Tail.gd" id="1_3x4me"]
 [ext_resource type="Texture2D" uid="uid://bgilakwmcmqnl" path="res://resources/tileset/snake_tileset.png" id="2_grlcg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_r6pk4"]
-size = Vector2(60, 60)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_dieor"]
 atlas = ExtResource("2_grlcg")
 region = Rect2(0, 80, 16, 16)
@@ -401,16 +398,18 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_grlcg"]
+
 [node name="Tail" type="Area2D"]
 script = ExtResource("1_3x4me")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(30, 30)
-shape = SubResource("RectangleShape2D_r6pk4")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(30, 30)
-scale = Vector2(3.75, 3.75)
+position = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_rx6pn")
 animation = &"angle_up_left"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+scale = Vector2(0.8, 0.8)
+shape = SubResource("RectangleShape2D_grlcg")

@@ -6,7 +6,6 @@ extends Area2D
 @export var origin_offset: Vector2 = Vector2.ZERO : set = set_origin_offset
 @export var downsize_factor: float = 0.85
 # References to child nodes
-@onready var color_rect: ColorRect = $ColorRect
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 
@@ -40,11 +39,6 @@ func update_visual():
 	# Get the size from the cells
 	var visual_width = bottom_right.x - offset_position.x
 	var visual_height = bottom_right.y - offset_position.y
-	
-	# Update ColorRect if it exists
-	if color_rect:
-		color_rect.size = Vector2(visual_width, visual_height)
-		color_rect.position = offset_position
 	
 	# Update CollisionShape2D if it exists
 	if collision_shape and collision_shape.shape:
