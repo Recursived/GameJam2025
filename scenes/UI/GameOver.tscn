@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm8ievtwe752j"]
+
+[ext_resource type="Script" path="res://scripts/ui/GameOver.gd" id="1_6h40s"]
+[ext_resource type="Theme" uid="uid://cm0hkx0yeq7ia" path="res://themes/main_theme.tres" id="1_c5loy"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2560.0
+offset_bottom = -1440.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6h40s")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.54902, 0.376471, 0.254902, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 1280.0
+offset_bottom = 720.0
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 80
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="Restart" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_c5loy")
+theme_override_font_sizes/font_size = 80
+text = "RESTART LEVEL"
+
+[node name="MainMenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_c5loy")
+theme_override_font_sizes/font_size = 80
+text = "MAIN MENU"
