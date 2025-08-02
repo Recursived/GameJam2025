@@ -1,6 +1,10 @@
 class_name Head
 extends Area2D
 
+@onready var sprite = $AnimatedSprite2D
+
+var last_direction = null
+var current_direction = null
 var previous_cell:Vector2 = Vector2.ZERO
 var next_cell:Vector2 = Vector2.ZERO
 var current_input:String
@@ -44,11 +48,29 @@ func _on_movement():
 		"ui_left": TileSet.CELL_NEIGHBOR_LEFT_SIDE,
 		"ui_right": TileSet.CELL_NEIGHBOR_RIGHT_SIDE
 	}
+	
+	var rotation_map = {
+		"ui_up": 0.0,
+		"ui_right": PI/2,
+		"ui_down": PI,
+		"ui_left": -PI/2
+	}
 	if current_input in input_dict.keys():
+		last_direction = current_direction;
+		current_direction = current_input;
+		EventBus.emit_signal(
+			"update_directions",
+			last_direction,
+			current_direction
+		)
 		next_cell = TileMapManager.get_neighbor_cell(
 			previous_cell,
 			input_dict.get(current_input)
 		)
+		rotate_sprite_to(rotation_map[current_input])
+		
+func rotate_sprite_to(target_rotation: float):
+	sprite.rotation = target_rotation
 
 func _on_head_collide(object):
 	if is_instance_of(object, Tail):
