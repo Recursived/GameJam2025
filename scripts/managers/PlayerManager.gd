@@ -14,6 +14,9 @@ var is_alive: bool
 var default_health:int = 3
 var health:int = 0
 
+var previous_input: String
+var current_input: String
+
 func _ready():
 	# Load head scene at startup
 	load_head_scene()
@@ -48,6 +51,8 @@ func set_spawn_points():
 	current_spawn_index = 0
 
 func _on_game_started():
+	previous_input = "none"
+	current_input = "none"
 	spawn_player()
 
 func spawn_player():
@@ -98,7 +103,12 @@ func _on_checkpoint_reached(checkpoint_index: int):
 		current_spawn_index = checkpoint_index
 
 		
-func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
+func _on_player_movement(
+	previous_cell:Vector2,
+	_current_cell:Vector2,
+	previous_input:String,
+	current_input:String
+):
 	if not tail_scene:
 		push_error("PlayerManager: No tail scene assigned!")
 		return
@@ -106,6 +116,9 @@ func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
 	var new_tail = tail_scene.instantiate()
 	get_tree().current_scene.add_child(new_tail)
 	new_tail.global_position = TileMapManager.cell_to_position(previous_cell)
+	
+	new_tail.set_input_state(previous_input, current_input)
+	new_tail.set_is_odd(tail_list.size() % 2 == 0)
 	
 	if tail_list.is_empty():
 		EventBus.emit_signal("bell_changed", new_tail)
@@ -159,6 +172,15 @@ func _remove_back_tail() -> Tail:
 	old_bell.queue_free()
 	return old_bell
 
+func get_last_tail_inputs():
+	if tail_list.is_empty():
+		return {
+			"previous_input":"none",
+			"next_input":"none"
+		}
+	var last_tail = tail_list[-1]
+	return InputManager.input_code_to_input_ui(last_tail.input_state)
+	
 func get_last_tail_cell():
 	if tail_list.is_empty():
 		return null
