@@ -34,4 +34,3 @@ func play_animation(spriteAnimation, frameNumber):
 func get_center_point():
 	var collision_rect: CollisionShape2D = get_node("CollisionShape2D")
 	return collision_rect.global_position
-
