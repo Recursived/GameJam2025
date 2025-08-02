@@ -23,7 +23,6 @@ func _on_game_started():
 	var enemy_scene = load("res://scenes/game/Enemy.tscn")
 	if enemy_scene:
 		add_enemy(enemy_scene, 6, 12, 1, 1, EnemyType.STATIC)
-		add_enemy(enemy_scene, 6, 3, 1, 1, EnemyType.MOVING)
 		add_enemy(enemy_scene, 8, 5, 1, 1, EnemyType.MOVING)
 		add_enemy(enemy_scene, 20, 10, 1, 1, EnemyType.RANDOM)
 		add_enemy(enemy_scene, 20, 7, 1, 1, EnemyType.RANDOM)
@@ -48,3 +47,5 @@ func _on_bell_touched(polygon_2d: Polygon2D):
 		else:
 			new_enemy_list.append(enemy)
 	list_enemies = new_enemy_list
+	if list_enemies.is_empty():
+		EventBus.emit_signal("game_won")

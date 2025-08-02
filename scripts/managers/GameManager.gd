@@ -29,6 +29,7 @@ func _ready():
 	EventBus.connect("score_changed", _on_score_changed)
 	EventBus.connect("player_died", _on_player_died)
 	EventBus.connect("viewport_size_changed", _on_viewport_size_changed)
+	EventBus.connect("game_won", _on_game_won)
 	
 	load_high_score()
 	print("GameManager initialized")
@@ -82,6 +83,11 @@ func game_over():
 		save_high_score()
 	
 	EventBus.emit_signal("game_over")
+
+func _on_game_won():
+	print("Game Won ! Final Score: ", score)
+	current_state = GameState.MENU
+	SceneManager.change_scene("StartScreen", true)
 
 func add_score(points: int):
 	score += points

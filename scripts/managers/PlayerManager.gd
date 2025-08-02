@@ -23,6 +23,7 @@ func _ready():
 	is_alive = true
 	
 	EventBus.connect("game_started", _on_game_started)
+	EventBus.connect("game_won", _on_game_won)
 	EventBus.connect("player_died", _on_player_died)
 	EventBus.connect("head_cell_changed", _on_player_movement)
 	EventBus.connect("game_started", _on_game_started)
@@ -54,8 +55,14 @@ func spawn_player():
 	if current_head and is_instance_valid(current_head):
 		current_head.queue_free()
 	
+	tail_list = []
+	
 	if not head_scene:
 		push_error("PlayerManager: No head scene assigned!")
+		return
+	
+	if not tail_scene:
+		push_error("PlayerManager: No tail scene assigned!")
 		return
 		
 	if spawn_points.is_empty():
@@ -73,9 +80,16 @@ func spawn_player():
 	is_alive = true
 	print("Player spawned at: ", current_spawn_cell)
 
-func _on_player_died():
+func remove_player():
 	while not tail_list.is_empty():
 		_remove_back_tail()
+	current_head.queue_free()
+	current_head = null
+
+func _on_player_died():
+	remove_player()
+
+func _on_game_won():
 	current_head.queue_free()
 	current_head = null
 
