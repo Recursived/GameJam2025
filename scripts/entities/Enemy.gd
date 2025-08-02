@@ -1,6 +1,7 @@
 extends Node2D
 
 signal enemy_collided(body)
+@onready var sprite = $AnimatedSprite2D
 
 #region common variables
 @onready var area_entity: AreaEntity = $AreaEntity
@@ -42,8 +43,6 @@ func initialize(origin: Vector2, width: int, height: int, type: EnemyManager.Ene
 		EnemyManager.EnemyType.KAMIKAZE:
 			current_direction = get_random_direction()
 	
-	change_color_by_type()
-	
 
 
 func change_color_by_type():
@@ -69,8 +68,6 @@ func change_color_by_type():
 		
 func _on_area_entity_body_entered(body : Node2D):		
 	rollback_move()
-	var color = Color(0.2, 1, 1) # cyan
-	area_entity.color_rect.color = color
 	# emit_signal("enemy_collided", body)
 
 
