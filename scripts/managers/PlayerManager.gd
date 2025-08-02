@@ -211,6 +211,7 @@ func get_player() -> Area2D:
 	return current_head
 
 func take_damage(amount: int):
+	EventBus.emit_signal("took_damage")
 	health-=1
 	if health <= 0:
 		die()
