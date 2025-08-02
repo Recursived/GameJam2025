@@ -18,3 +18,7 @@ func on_becoming_bell(bell: Tail):
 			color_rect.color = Color("green")
 		else:
 			print("ERROR: do not find a color rect to modify")
+
+func get_center_point():
+	var collision_rect: CollisionShape2D = get_node("CollisionShape2D")
+	return collision_rect.global_position
