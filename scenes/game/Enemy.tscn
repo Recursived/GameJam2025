@@ -1,7 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://cl8m8kculskwy"]
+[gd_scene load_steps=10 format=3 uid="uid://f6jj5x5j2cai"]
 
 [ext_resource type="Script" uid="uid://urh26ejpkpfc" path="res://scripts/entities/Enemy.gd" id="1_6vb2m"]
 [ext_resource type="Texture2D" uid="uid://llemyxsjkhyh" path="res://resources/tileset/cow-tileset.png" id="3_jm6wa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vb2m"]
+atlas = ExtResource("3_jm6wa")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jm6wa"]
+atlas = ExtResource("3_jm6wa")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3inr"]
+atlas = ExtResource("3_jm6wa")
+region = Rect2(32, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ayi7h"]
 atlas = ExtResource("3_jm6wa")
@@ -15,10 +27,30 @@ region = Rect2(16, 16, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_6vb2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jm6wa")
+}, {
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_s3inr")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ayi7h")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n8vp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8vp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayi7h")
 }],
 "loop": true,
 "name": &"idle",
@@ -36,7 +68,7 @@ z_index = 2
 texture_filter = 1
 position = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_s3inr")
-animation = &"idle"
+animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(8, 8)

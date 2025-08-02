@@ -9,7 +9,7 @@ var current_head: Area2D
 var tail_list: Array[Tail]
 var spawn_points: Array[Vector2] = [Vector2.ZERO]
 var current_spawn_index: int = 0
-var reset_min_size: int = 3
+var reset_min_size: int = 1
 var is_alive: bool
 var default_health:int = 3
 var health:int = 0
@@ -139,8 +139,7 @@ func _on_head_on_tail_collision(tail_object: Tail):
 	# Reset to the tail behind the tail object touched
 	else:
 		EventBus.emit_signal("tail_touched")
-		var index_to_reset: int = tail_list.find(tail_object) + 2
-		EventBus.emit_signal("size_changed", tail_list.size() - index_to_reset)
+		EventBus.emit_signal("size_changed", reset_min_size)
 
 func _get_polygon_from_tail() -> Polygon2D:
 	var polygon: PackedVector2Array = []
