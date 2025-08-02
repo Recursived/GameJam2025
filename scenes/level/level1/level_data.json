@@ -1,0 +1,21 @@
+{
+	"enemies": [
+		{
+			"height": 1.0,
+			"type": "RANDOM",
+			"width": 1.0,
+			"x": 20.0,
+			"y": 20.0
+		}, 
+		{
+			"height": 1.0,
+			"type": "KAMIKAZE",
+			"width": 1.0,
+			"x": 10.0,
+			"y": 10.0
+		}
+	],
+	"spawns": [
+		[40.0, 40.0]
+	]
+}

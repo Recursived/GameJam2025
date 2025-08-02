@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8jxg20v48ck2"]
-
-[ext_resource type="TileSet" uid="uid://sx7fn2jo7sbn" path="res://scenes/level/level1/enemies.tres" id="1_0iw5g"]
-
-[node name="Enemies" type="TileMapLayer"]
-tile_map_data = PackedByteArray(0, 0, 8, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-tile_set = ExtResource("1_0iw5g")

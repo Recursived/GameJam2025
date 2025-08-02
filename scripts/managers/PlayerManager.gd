@@ -46,8 +46,8 @@ func load_tail_scene():
 	if not tail_scene:
 		push_error("PlayerManager: Failed to load head scene at " + TAIL_SCENE_PATH)
 
-func set_spawn_points():
-	spawn_points = TileMapManager.get_spawns()
+func set_spawn_points(points: Array[Vector2]):
+	spawn_points = points
 	current_spawn_index = 0
 
 func _on_game_started():
