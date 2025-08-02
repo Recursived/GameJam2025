@@ -40,7 +40,7 @@ func add_enemy(enemy_scene, x, y, width, height, enemy_type):
 	list_enemies.append(instance_enemy)
 	if instance_enemy is Enemy:
 		get_tree().current_scene.add_child(instance_enemy)
-		instance_enemy.initialize(Vector2(x, y), width, height, enemy_type)
+		instance_enemy.initialize(Vector2(x, y), enemy_type)
 
 
 func on_move_enemies():
@@ -56,8 +56,7 @@ func _on_bell_touched(polygon_2d: Polygon2D):
 	var new_enemy_list: Array[Enemy] = []
 	var polygon: PackedVector2Array = polygon_2d.polygon
 	for enemy in list_enemies:
-		var enemy_cell: Vector2 = enemy.get_area_position()
-		var enemy_pos: Vector2 = TileMapManager.cell_to_position(enemy_cell)
+		var enemy_pos: Vector2 = enemy.get_area_position()
 		if Geometry2D.is_point_in_polygon(enemy_pos, polygon):
 			EventBus.emit_signal("enemy_died", enemy)
 			enemy.queue_free()
