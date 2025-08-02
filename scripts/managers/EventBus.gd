@@ -33,6 +33,10 @@ signal wall_touched
 signal head_rollbacked
 #endregion
 
+#region Player Events
+signal enemy_died(enemy: Node2D)
+#endregion
+
 #region UI Events
 signal ui_button_pressed(button_name: String)
 signal menu_opened(menu_name: String)
