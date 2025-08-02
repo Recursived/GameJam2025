@@ -31,4 +31,7 @@ func play_animation(spriteAnimation, frameNumber):
 	else:
 		sprite.play_backwards(spriteAnimation["animation_name"])
 
-	
+func get_center_point():
+	var collision_rect: CollisionShape2D = get_node("CollisionShape2D")
+	return collision_rect.global_position
+
