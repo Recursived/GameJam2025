@@ -75,6 +75,8 @@ func load_enemies(json_data):
 
 func load_camera(json_data):
 	var zoom = json_data["zoom"]
+	if camera:
+		camera.queue_free()
 	camera = Camera2D.new()
 	camera.position = Vector2(640/zoom, 360/zoom)
 	camera.zoom = Vector2(zoom ,zoom)
@@ -99,7 +101,6 @@ func start_game():
 	current_state = GameState.PLAYING
 	score = 0
 	lives = 3
-	current_level = 1
 	EventBus.emit_signal("game_started")
 
 func pause_game():
@@ -135,8 +136,13 @@ func game_over():
 
 func _on_game_won():
 	print("Game Won ! Final Score: ", score)
-	current_state = GameState.MENU
-	SceneManager.change_scene("StartScreen", true)
+	
+	current_level+=1
+	if FileAccess.file_exists(JSON_PATH % ["level"+str(current_level), "level_data.json"]):
+		SceneManager.change_scene("Main", true)
+	else:
+		current_state = GameState.MENU
+		SceneManager.change_scene("StartScreen", true)
 
 func add_score(points: int):
 	score += points

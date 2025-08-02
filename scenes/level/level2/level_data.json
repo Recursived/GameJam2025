@@ -1,0 +1,54 @@
+{
+	"first_input": "ui_up",
+	"bpm": 75,
+	"zoom":1.8,
+	"enemies": [
+		{
+			"type": "moving",
+			"x": 22,
+			"y": 12,
+			"args":{
+				"pattern": ["L","L","L","R","R","R"]
+			}
+		},
+		{
+			"type": "static",
+			"x": 7,
+			"y": 4,
+			"args":{}
+		},
+		{
+			"type": "static",
+			"x": 9,
+			"y": 6,
+			"args":{}
+		},
+		{
+			"type": "static",
+			"x": 10,
+			"y": 9,
+			"args":{}
+		},
+		{
+			"type": "static",
+			"x": 6,
+			"y": 7,
+			"args":{}
+		},
+		{
+			"type": "random",
+			"x": 35,
+			"y": 14,
+			"args":{}
+		},
+		{
+			"type": "random",
+			"x": 38,
+			"y": 11,
+			"args":{}
+		}
+	],
+	"spawns": [
+		[3, 19]
+	]
+}
