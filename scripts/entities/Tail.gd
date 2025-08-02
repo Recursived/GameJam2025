@@ -1,7 +1,11 @@
 class_name Tail 
 extends Area2D
 
+@onready var sprite = $AnimatedSprite2D
+
 @export var is_bell:bool = false
+
+var is_odd = false
 
 func _ready():
 	is_bell = false
@@ -18,3 +22,13 @@ func on_becoming_bell(bell: Tail):
 			color_rect.color = Color("green")
 		else:
 			print("ERROR: do not find a color rect to modify")
+
+func play_animation(spriteAnimation, frameNumber):
+	sprite.frame = frameNumber
+	sprite.rotation = spriteAnimation["orientation"]
+	if(is_odd):
+		sprite.play(spriteAnimation["animation_name"])
+	else:
+		sprite.play_backwards(spriteAnimation["animation_name"])
+
+	

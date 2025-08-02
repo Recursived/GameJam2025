@@ -1,9 +1,68 @@
-[gd_scene load_steps=3 format=3 uid="uid://0rp6s3mcowxf"]
+[gd_scene load_steps=10 format=3 uid="uid://0rp6s3mcowxf"]
 
 [ext_resource type="Script" uid="uid://cfv0i5xooavev" path="res://scripts/entities/Head.gd" id="1_4idrh"]
+[ext_resource type="Texture2D" uid="uid://gyfa4p3eb8av" path="res://resources/tileset/snake.png" id="2_dh75g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4idrh"]
 size = Vector2(60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dh75g"]
+atlas = ExtResource("2_dh75g")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebntf"]
+atlas = ExtResource("2_dh75g")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckqok"]
+atlas = ExtResource("2_dh75g")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctnky"]
+atlas = ExtResource("2_dh75g")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7n27v"]
+atlas = ExtResource("2_dh75g")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p1p38"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh75g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebntf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ckqok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebntf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh75g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh75g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctnky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7n27v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctnky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh75g")
+}],
+"loop": true,
+"name": &"head",
+"speed": 2.0
+}]
 
 [node name="Head" type="Area2D"]
 script = ExtResource("1_4idrh")
@@ -17,3 +76,12 @@ shape = SubResource("RectangleShape2D_4idrh")
 offset_right = 60.0
 offset_bottom = 60.0
 color = Color(0.723451, 0.135811, 0.413791, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(30, 30)
+scale = Vector2(3.75, 3.75)
+sprite_frames = SubResource("SpriteFrames_p1p38")
+animation = &"head"
+autoplay = "head"
+frame_progress = 0.848901

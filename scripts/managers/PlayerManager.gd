@@ -6,6 +6,8 @@ const TAIL_SCENE_PATH = "res://scenes/game/Tail.tscn"
 var head_scene: PackedScene
 var tail_scene: PackedScene
 var current_head: Area2D
+var last_direction = null
+var current_direction = null
 var tail_list: Array[Tail]
 var spawn_points: Array[Vector2] = [Vector2(3,3)]
 var current_spawn_index: int = 0
@@ -30,6 +32,7 @@ func _ready():
 	EventBus.connect("head_on_tail_collision", _on_head_on_tail_collision)
 	EventBus.connect("head_on_wall_collision", _on_head_on_wall_collision)
 	EventBus.connect("size_changed", _on_size_changed)
+	EventBus.connect("update_directions", update_directions)
 	print("PlayerManager initialized")
 
 func load_head_scene():
@@ -83,6 +86,9 @@ func _on_checkpoint_reached(checkpoint_index: int):
 	if checkpoint_index < spawn_points.size():
 		current_spawn_index = checkpoint_index
 
+func update_directions(last_direction, current_direction):
+	self.last_direction = last_direction
+	self.current_direction = current_direction
 		
 func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
 	if not tail_scene:
@@ -92,14 +98,80 @@ func _on_player_movement(previous_cell:Vector2, _current_cell:Vector2):
 	var new_tail = tail_scene.instantiate()
 	get_tree().current_scene.add_child(new_tail)
 	new_tail.global_position = TileMapManager.cell_to_position(previous_cell)
+		
+	var frame_number = 0
+	var is_odd = false
 	
 	if tail_list.is_empty():
 		EventBus.emit_signal("bell_changed", new_tail)
-	
+	else : 
+		var last_tail = tail_list.back()
+		frame_number = last_tail.sprite.frame
+		new_tail.is_odd = !last_tail.is_odd
+
+	new_tail.play_animation(get_animation_name_and_orientation(last_direction, current_direction, new_tail.is_bell), frame_number)
 	tail_list.append(new_tail)
 
 	print("Tail spawned at: ", previous_cell)
+	
+func get_animation_name_and_orientation(last_direction, current_direction, isTail) -> Dictionary:
+	print(last_direction, current_direction)
+	
+	var rotation_map = {
+		"ui_up": 0.0,
+		"ui_right": PI/2,
+		"ui_down": PI,
+		"ui_left": -PI/2
+	}
+	# Si c'est la queue
+	if isTail:
+		match last_direction:
+			"ui_up":
+				return {"animation_name" : "tail_Y", "orientation":rotation_map["ui_up"]}
+			"ui_down":
+				return {"animation_name" : "tail_Y", "orientation" : rotation_map["ui_down"]}
+			"ui_left":
+				return {"animation_name" : "tail_X", "orientation" : rotation_map["ui_left"]}
+			"ui_right":
+				return {"animation_name" : "tail_X", "orientation" : rotation_map["ui_right"]}
+			_:
+				return {"animation_name" : "tail_X", "orientation" : rotation_map["ui_right"]}
+	
+	#si c'est un segment de corps droit
+	if last_direction == current_direction:
+		match current_direction:
+			"ui_up":
+				return {"animation_name" : "body_Y", "orientation" : rotation_map["ui_up"]}
+			"ui_down":
+				return {"animation_name" : "body_Y", "orientation" : rotation_map["ui_down"]}
+			"ui_left":
+				return {"animation_name" : "body_X", "orientation" : rotation_map["ui_down"]}
+			"ui_right":
+				return {"animation_name" : "body_X", "orientation" : rotation_map["ui_up"]}
+			_:
+				return {"animation_name" : "body_X", "orientation" : rotation_map["ui_right"]}
+	
+	# Sinon, c'est un angle
+	match [last_direction, current_direction]:
+		["ui_right", "ui_down"], ["ui_up", "ui_left"]:
+			return {"animation_name" : "angle_up_right", "orientation" : rotation_map["ui_up"]}
+		
+		["ui_left", "ui_down"], ["ui_up", "ui_right"]:
+			return {"animation_name" : "angle_up_left", "orientation" : rotation_map["ui_up"]}
+		
+		["ui_right", "ui_up"], ["ui_down", "ui_left"]:
+			return {"animation_name" : "angle_down_right", "orientation" : rotation_map["ui_up"]}
+		
+		["ui_left", "ui_up"], ["ui_down", "ui_right"]:
+			return {"animation_name" : "angle_down_left", "orientation" : rotation_map["ui_up"]}
+		
+		_:
+			return {"animation_name":"body_X", "orientation" : rotation_map["ui_right"]} 
+	
 
+
+
+	
 func _on_head_on_tail_collision(tail_object: Tail):
 	print("head touched tail, bell status: ", tail_object.is_bell)
 
