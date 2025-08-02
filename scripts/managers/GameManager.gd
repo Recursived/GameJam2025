@@ -18,6 +18,8 @@ var current_level: int = 1
 var lives: int = 3
 var time_scale: float = 1.0
 
+var camera: Camera2D
+
 # Store viewport size globally
 var viewport_size: Vector2 = Vector2.ZERO
 
@@ -58,30 +60,37 @@ func load_json(level:int):
 	return data
 
 func load_spawn_points(json_data):
+	var first_input = json_data["first_input"]
 	var spawns_data = json_data["spawns"]
 	var spawns: Array[Vector2] = []
 	for spawn in spawns_data:
 		spawns.append(Vector2(spawn[0],spawn[1]))
-	PlayerManager.set_spawn_points(spawns)
+	PlayerManager.set_spawn_points(spawns, first_input)
 
 func load_enemies(json_data):
 	enemies = []
 	var enemies_data = json_data["enemies"]
 	for enemy in enemies_data:
-		enemies.append({
-			"x": enemy["x"],
-			"y": enemy["y"],
-			"width": enemy["width"],
-			"height": enemy["height"],
-			"type": enemy["type"]
-		})
+		enemies.append(enemy)
 
+func load_camera(json_data):
+	var zoom = json_data["zoom"]
+	camera = Camera2D.new()
+	camera.position = Vector2(640/zoom, 360/zoom)
+	camera.zoom = Vector2(zoom ,zoom)
+	get_tree().current_scene.add_child(camera)
+
+func load_bpm(json_data):
+	var bpm = json_data["bpm"]
+	RhythmManager.set_bpm(bpm)
 	
 func load_level():
 	TileMapManager.load_floor_scene(current_level)
 	TileMapManager.load_walls_scene(current_level)
 	TileMapManager.instanciate_tile_maps()
 	var json_data = load_json(current_level)
+	load_bpm(json_data)
+	load_camera(json_data)
 	load_spawn_points(json_data)
 	load_enemies(json_data)
 	
@@ -142,6 +151,7 @@ func set_time_scale(scale: float):
 
 func _on_game_over():
 	print("Game Over! Final Score: ", score)
+	camera.queue_free()
 	current_state = GameState.MENU
 	SceneManager.change_scene("StartScreen", true)
 

@@ -13,6 +13,7 @@ var reset_min_size: int = 1
 var is_alive: bool
 var default_health:int = 3
 var health:int = 0
+var first_input:String = "ui_right"
 
 var previous_input: String
 var current_input: String
@@ -46,8 +47,9 @@ func load_tail_scene():
 	if not tail_scene:
 		push_error("PlayerManager: Failed to load head scene at " + TAIL_SCENE_PATH)
 
-func set_spawn_points(points: Array[Vector2]):
+func set_spawn_points(points: Array[Vector2], first_input_param: String):
 	spawn_points = points
+	first_input=first_input_param
 	current_spawn_index = 0
 
 func _on_game_started():
@@ -78,8 +80,22 @@ func spawn_player():
 	get_tree().current_scene.add_child(current_head)
 	
 	var current_spawn_cell: Vector2 = spawn_points[current_spawn_index]
+	current_head.init_head(first_input)
 	current_head.init_spawn_cell(current_spawn_cell)
-	current_head.init_head()
+	
+	var previous_cell_direction = InputManager.input_contrary[current_head.previous_input]
+	var bell_cell = TileMapManager.get_neighbor_cell(
+		current_spawn_cell, 
+		InputManager.input_dict[previous_cell_direction]["neighbor"]
+	)
+	
+	var new_tail = tail_scene.instantiate()
+	get_tree().current_scene.add_child(new_tail)
+	new_tail.global_position = TileMapManager.cell_to_position(bell_cell)
+	new_tail.set_input_state(current_head.previous_input, current_head.next_input)
+	new_tail.set_is_odd(tail_list.size() % 2 == 0)
+	tail_list.append(new_tail)
+	EventBus.emit_signal("bell_changed", new_tail)
 	
 	health = default_health
 	is_alive = true

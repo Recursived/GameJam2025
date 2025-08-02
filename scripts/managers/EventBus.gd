@@ -75,7 +75,7 @@ signal powerup_activated(powerup_type: String)
 
 #region Clock Events
 signal beat_triggered
-signal quarter_beat_triggered(quarter_beat_modulo: int)
+signal quarter_beat_triggered(quarter_beat_number: int)
 signal eight_beat_triggered
 signal movement_input_on_beat(input: String)
 signal movement_input_not_on_beat(input: String)

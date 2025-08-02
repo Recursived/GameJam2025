@@ -21,9 +21,9 @@ func _physics_process(delta):
 	if next_input != "none":
 		sprite.rotation = InputManager.input_to_angle[next_input]
 
-func init_head():
-	previous_input = "none"
-	next_input = "none"
+func init_head(first_input_param: String):
+	previous_input = first_input_param
+	next_input = first_input_param
 	is_moving = false
 
 func init_spawn_cell(cell: Vector2):
@@ -62,8 +62,8 @@ func _on_movement():
 		previous_input = next_input
 		previous_cell = next_cell
 
-func _on_quarter_beat(quarter_beat_modulo: int):
-	sprite.frame = quarter_beat_modulo
+func _on_quarter_beat(quarter_beat_number: int):
+	sprite.frame = quarter_beat_number % 7
 	
 func _on_head_collide(object):
 	if is_instance_of(object, Tail):
