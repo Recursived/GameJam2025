@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cs6xbybe0ocb8" path="res://resources/startScreen/play.png" id="3_uo0jk"]
 [ext_resource type="Texture2D" uid="uid://bpiwc5rk3rex3" path="res://resources/startScreen/cadre_snek.png" id="4_0lnxs"]
 [ext_resource type="Texture2D" uid="uid://dyhsax2p1ghf0" path="res://resources/startScreen/snek.png" id="5_6r2h5"]
-[ext_resource type="Script" path="res://scenes/UI/buttons.gd" id="6_ciplo"]
+[ext_resource type="Script" uid="uid://cq07kk2jw2ket" path="res://scenes/UI/buttons.gd" id="6_ciplo"]
 [ext_resource type="Texture2D" uid="uid://bdoi0c5l3k5s" path="res://resources/startScreen/acueil.png" id="6_ifie5"]
 [ext_resource type="Texture2D" uid="uid://btx43yvfkr3wk" path="res://resources/startScreen/dune_cinquieme_plan.png" id="6_rqfem"]
 [ext_resource type="Texture2D" uid="uid://5bg1gflelp6t" path="res://resources/startScreen/dune_quatrieme_plan.png" id="7_l6tu6"]
