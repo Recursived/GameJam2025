@@ -7,7 +7,7 @@ var head_scene: PackedScene
 var tail_scene: PackedScene
 var current_head: Area2D
 var tail_list: Array[Tail]
-var spawn_points: Array[Vector2] = [Vector2(20,20)]
+var spawn_points: Array[Vector2] = [Vector2.ZERO]
 var current_spawn_index: int = 0
 var reset_min_size: int = 3
 var is_alive: bool
@@ -43,8 +43,8 @@ func load_tail_scene():
 	if not tail_scene:
 		push_error("PlayerManager: Failed to load head scene at " + TAIL_SCENE_PATH)
 
-func set_spawn_points(points: Array[Vector2]):
-	spawn_points = points
+func set_spawn_points():
+	spawn_points = TileMapManager.get_spawns()
 	current_spawn_index = 0
 
 func _on_game_started():
