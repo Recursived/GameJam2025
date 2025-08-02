@@ -19,20 +19,19 @@ func _ready() -> void:
 	EventBus.connect("beat_triggered", on_move_enemies)
 	print("EnemyManager initialized")
 	
-	
 func _on_game_started():
 	var enemy_scene = load("res://scenes/game/Enemy.tscn")
+	var enemies = TileMapManager.get_enemies()
 	if enemy_scene:
-		add_enemy(enemy_scene, 6, 12, 1, 1, EnemyType.STATIC)
-		add_enemy(enemy_scene, 8, 5, 1, 1, EnemyType.MOVING)
-		add_enemy(enemy_scene, 20, 2, 1, 1, EnemyType.KAMIKAZE)
-		add_enemy(enemy_scene, 20, 3, 1, 1, EnemyType.KAMIKAZE)
-		add_enemy(enemy_scene, 20, 7, 1, 1, EnemyType.KAMIKAZE)
-		add_enemy(enemy_scene, 20, 5, 1, 1, EnemyType.KAMIKAZE)
-		add_enemy(enemy_scene, 22, 2, 1, 1, EnemyType.KAMIKAZE)
-		add_enemy(enemy_scene, 22, 3, 1, 1, EnemyType.KAMIKAZE)
-		add_enemy(enemy_scene, 22, 7, 1, 1, EnemyType.KAMIKAZE)
-		add_enemy(enemy_scene, 22, 5, 1, 1, EnemyType.KAMIKAZE)
+		for enemy in enemies:
+			add_enemy(
+				enemy_scene,
+				enemy["x"],
+				enemy["y"],
+				enemy["width"],
+				enemy["height"], 
+				enemy["type"]
+			)
 
 func add_enemy(enemy_scene, x, y, width, height, enemy_type):
 	var instance_enemy = enemy_scene.instantiate() as Enemy

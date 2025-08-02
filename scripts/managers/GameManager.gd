@@ -37,21 +37,28 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("pause"):
 		toggle_pause()
+
+func set_level(level: int):
+	current_level = level
 		
 func load_game():
-	TileMapManager.load_floor_scene()
-	TileMapManager.load_walls_scene()
-	TileMapManager.instanciate_tile_maps()
 	EventBus.emit_signal("game_loaded")
 
+func load_level():
+	TileMapManager.load_floor_scene(current_level)
+	TileMapManager.load_walls_scene(current_level)
+	TileMapManager.load_spawns_scene(current_level)
+	TileMapManager.load_enemies_scene(current_level)
+	TileMapManager.instanciate_tile_maps()
+	PlayerManager.set_spawn_points()
+
 func start_game():
+	load_level()
 	current_state = GameState.PLAYING
 	score = 0
 	lives = 3
 	current_level = 1
 	EventBus.emit_signal("game_started")
-	
-	# SceneManager.change_scene("GameWorld")
 
 func pause_game():
 	if current_state == GameState.PLAYING:

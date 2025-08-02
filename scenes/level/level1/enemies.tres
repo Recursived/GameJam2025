@@ -1,0 +1,12 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://sx7fn2jo7sbn"]
+
+[ext_resource type="Texture2D" uid="uid://6oqsuhf8t7v5" path="res://resources/tile/utility_tiles/enemy_static.png" id="1_60cby"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30xm8"]
+texture = ExtResource("1_60cby")
+texture_region_size = Vector2i(60, 60)
+0:0/0 = 0
+
+[resource]
+tile_size = Vector2i(60, 60)
+sources/0 = SubResource("TileSetAtlasSource_30xm8")

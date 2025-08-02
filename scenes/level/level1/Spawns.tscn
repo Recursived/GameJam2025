@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://te2mbq56xyil"]
+
+[ext_resource type="TileSet" uid="uid://cj8fvnlbe4gec" path="res://scenes/level/level1/spawns.tres" id="1_dtd3a"]
+
+[node name="Spawns" type="TileMapLayer"]
+tile_map_data = PackedByteArray(0, 0, 51, 0, 7, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+tile_set = ExtResource("1_dtd3a")
+collision_enabled = false
