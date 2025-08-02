@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://idcq0ns8td8a" path="res://scripts/components/AreaEntity.gd" id="1_f2emv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f2emv"]
+size = Vector2(34, 34)
 
 [node name="AreaEntity" type="Area2D"]
 script = ExtResource("1_f2emv")
@@ -12,4 +13,5 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(20, 20)
 shape = SubResource("RectangleShape2D_f2emv")
