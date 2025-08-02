@@ -23,7 +23,12 @@ signal player_died
 signal player_respawned
 signal default_size_changed(default_size: int)
 signal size_changed(new_size: int)
-signal head_cell_changed(previous_cell: Vector2, next_cell: Vector2)
+signal head_cell_changed(
+	previous_cell: Vector2,
+	next_cell: Vector2,
+	previous_input: String,
+	next_input: String
+)
 signal bell_changed(tail_object: Tail)
 signal head_on_tail_collision(tail_object: Tail)
 signal head_on_wall_collision
@@ -70,6 +75,7 @@ signal powerup_activated(powerup_type: String)
 
 #region Clock Events
 signal beat_triggered
+signal quarter_beat_triggered(quarter_beat_modulo: int)
 signal eight_beat_triggered
 signal movement_input_on_beat(input: String)
 signal movement_input_not_on_beat(input: String)

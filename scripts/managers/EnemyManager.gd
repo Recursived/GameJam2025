@@ -17,9 +17,11 @@ func _ready() -> void:
 	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("bell_touched", _on_bell_touched)
 	EventBus.connect("beat_triggered", on_move_enemies)
+	EventBus.connect("game_over", _on_game_over)
 	print("EnemyManager initialized")
 	
 func _on_game_started():
+	list_enemies = []
 	var enemy_scene = load("res://scenes/game/Enemy.tscn")
 	var enemies = TileMapManager.get_enemies()
 	if enemy_scene:
@@ -45,6 +47,10 @@ func on_move_enemies():
 	# sequential moves to avoid problems with collisions
 	for enemy in list_enemies:
 		enemy.move()
+
+func _on_game_over():
+	for enemy in list_enemies:
+		enemy.queue_free()
 
 func _on_bell_touched(polygon_2d: Polygon2D):
 	var new_enemy_list: Array[Enemy] = []

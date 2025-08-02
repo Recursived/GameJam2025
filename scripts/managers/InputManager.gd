@@ -10,13 +10,56 @@ var max_history_size: int = 100
 var input_enabled: bool = true
 var input_context: String = "game"
 
-var movement_inputs: Array = [
-		"ui_up",
-		"ui_down",
-		"ui_left",
-		"ui_right"
-	]
-	
+const input_code_to_char = {
+	"R":"ui_right",
+	"L":"ui_left",
+	"U":"ui_up",
+	"D":"ui_down"
+}
+
+const input_code_to_sprite = {
+	"RR":{"tail":"body_X", "bell":"tail_X", "angle":PI, "bell_angle":PI},
+	"LL":{"tail":"body_X", "bell":"tail_X", "angle":0, "bell_angle":0},
+	"DD":{"tail":"body_Y", "bell":"tail_Y", "angle":PI, "bell_angle":PI},
+	"UU":{"tail":"body_Y", "bell":"tail_Y", "angle":0, "bell_angle":0},
+	"RD":{"tail":"angle_up_right", "bell":"tail_Y", "angle":0, "bell_angle":PI},
+	"RU":{"tail":"angle_down_right", "bell":"tail_Y", "angle":0, "bell_angle":0},
+	"LD":{"tail":"angle_up_left", "bell":"tail_Y", "angle":0, "bell_angle":PI},
+	"LU":{"tail":"angle_down_left", "bell":"tail_Y", "angle":0, "bell_angle":0},
+	"DR":{"tail":"angle_down_left", "bell":"tail_X", "angle":0, "bell_angle":PI},
+	"DL":{"tail":"angle_down_right", "bell":"tail_X", "angle":0, "bell_angle":0},
+	"UR":{"tail":"angle_up_left", "bell":"tail_X", "angle":0, "bell_angle":PI},
+	"UL":{"tail":"angle_up_right", "bell":"tail_X", "angle":0, "bell_angle":0},
+}
+
+const input_to_angle = {
+	"ui_up": 0,
+	"ui_down": PI,
+	"ui_left": -PI/2,
+	"ui_right": PI/2
+}
+
+const input_dict = {
+	"ui_up": {
+		"neighbor": TileSet.CELL_NEIGHBOR_TOP_SIDE
+	},
+	"ui_down": {
+		"neighbor": TileSet.CELL_NEIGHBOR_BOTTOM_SIDE
+	},
+	"ui_left": {
+		"neighbor": TileSet.CELL_NEIGHBOR_LEFT_SIDE
+	},
+	"ui_right": {
+		"neighbor": TileSet.CELL_NEIGHBOR_RIGHT_SIDE
+	}
+}
+
+const input_translation = {
+	"ui_up": "U",
+	"ui_down": "D",
+	"ui_left": "L",
+	"ui_right": "R"
+}
 
 func _ready():
 	print("InputManager initialized")
@@ -87,3 +130,9 @@ func set_input_context(context: String):
 
 func is_action_just_pressed_buffered(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or consume_buffered_action(action)
+
+func input_code_to_input_ui(input_code: String):
+	return {
+		"previous_input": input_code_to_char[input_code[0]],
+		"next_input": input_code_to_char[input_code[1]]
+	}

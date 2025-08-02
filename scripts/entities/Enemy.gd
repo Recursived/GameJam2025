@@ -5,7 +5,7 @@ signal enemy_collided(body)
 #region common variables
 @onready var area_entity: AreaEntity = $AreaEntity
 var enemy_type : EnemyManager.EnemyType = EnemyManager.EnemyType.STATIC
-var cooldown_move : int = 5
+var cooldown_move : int = 1
 var current_wait_time: int = 0
 var last_position : Vector2 = Vector2.ZERO
 #endregion
