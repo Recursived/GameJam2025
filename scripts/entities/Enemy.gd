@@ -21,10 +21,9 @@ var current_direction : TileSet.CellNeighbor = TileSet.CellNeighbor.CELL_NEIGHBO
 #endregion
 
 func _ready():
-	EventBus.connect("beat_triggered", on_trigger_next_move)	
 	if area_entity:
 		area_entity.connect("body_entered", Callable(self, "_on_area_entity_body_entered"))
-		
+		area_entity.connect("area_entered", Callable(self, "_on_area_entity_body_entered"))
 
 
 func initialize(origin: Vector2, width: int, height: int, type: EnemyManager.EnemyType):
@@ -68,11 +67,10 @@ func change_color_by_type():
 			color = Color.WHITE
 	color_rect.color = color
 		
-func _on_area_entity_body_entered(body : Node2D):
-	TileMapManager.position_to_cell(body.position)
-	body.position
-		# var color = Color(0.2, 1, 1) # cyan
-		# area_entity.color_rect.color = color
+func _on_area_entity_body_entered(body : Node2D):		
+	rollback_move()
+	var color = Color(0.2, 1, 1) # cyan
+	area_entity.color_rect.color = color
 	# emit_signal("enemy_collided", body)
 
 
@@ -87,7 +85,7 @@ func move():
 			
 			
 
-
+#region utils enemy function 
 func get_random_direction():
 	var directions = [TileSet.CELL_NEIGHBOR_TOP_SIDE, TileSet.CELL_NEIGHBOR_LEFT_SIDE, TileSet.CELL_NEIGHBOR_BOTTOM_SIDE, TileSet.CELL_NEIGHBOR_RIGHT_SIDE]
 	var selected = directions[randi() % directions.size()]
@@ -107,6 +105,19 @@ func get_opposite_direction(direction):
 		_:
 			return direction
 
+
+func get_rotated_direction_90(direction: TileSet.CellNeighbor, clockwise: bool = true) -> TileSet.CellNeighbor:
+	# Assumes directions are: TOP, RIGHT, BOTTOM, LEFT
+	var directions = [TileSet.CELL_NEIGHBOR_TOP_SIDE, TileSet.CELL_NEIGHBOR_RIGHT_SIDE, TileSet.CELL_NEIGHBOR_BOTTOM_SIDE, TileSet.CELL_NEIGHBOR_LEFT_SIDE]
+	var idx = directions.find(direction)
+	if idx == -1:
+		return direction
+	if clockwise:
+		return directions[(idx + 1) % directions.size()]
+	else:
+		return directions[(idx - 1 + directions.size()) % directions.size()]
+#endregion
+
 func on_trigger_next_move():
 	# To be replaced by the tempo manager
 	move()
@@ -121,6 +132,7 @@ func check_cooldown_is_good_for_move():
 
 #region Typed moving function
 func move_enemy_type_moving():
+	last_position = area_entity.origin_offset
 	if not check_cooldown_is_good_for_move():
 		return
 	var selected
@@ -130,7 +142,6 @@ func move_enemy_type_moving():
 		selected = get_opposite_direction(path_to_follow[path_index])
 	var neighbour = TileMapManager.get_neighbor_cell(area_entity.origin_offset, selected)
 	area_entity.set_origin_offset(neighbour)
-	last_position = neighbour
 	current_wait_time = 0  # Reset cooldown after moving
 
 	# Ping-pong path index
@@ -146,23 +157,28 @@ func move_enemy_type_moving():
 			path_forward = true
 			
 func move_enemy_type_random():
+	last_position = area_entity.origin_offset
 	if not check_cooldown_is_good_for_move():
 		return
 	var selected = get_random_direction()
 	var neighbour = TileMapManager.get_neighbor_cell(area_entity.origin_offset, selected)
 	area_entity.set_origin_offset(neighbour)
-	last_position = neighbour
 	current_wait_time = 0  # Reset cooldown after moving
 	
 func move_enemy_type_kamikaze():
+	last_position = area_entity.origin_offset
 	if not check_cooldown_is_good_for_move():
 		return
 	var neighbour = TileMapManager.get_neighbor_cell(area_entity.origin_offset, current_direction)
 	area_entity.set_origin_offset(neighbour)
-	last_position = neighbour
 	current_wait_time = 0  # Reset cooldown after moving
 
 func rollback_move():
 	area_entity.set_origin_offset(last_position)
+	current_wait_time = 0
+	if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
+		current_direction = get_rotated_direction_90(current_direction)
+	
+	
 
 #endregion
