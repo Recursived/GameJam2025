@@ -1,0 +1,218 @@
+{
+	"first_input": "ui_left",
+	"bpm": 95,
+	"zoom":1.0,
+	"enemies": [
+		{
+			"type": "static",
+			"x": 68,
+			"y": 27,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 73,
+			"y": 28,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 71,
+			"y": 32,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 28,
+			"y": 34,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 21,
+			"y": 29,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 17,
+			"y": 25,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 8,
+			"y": 39,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 4,
+			"y": 35,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 9,
+			"y": 35,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 11,
+			"y": 31,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 4,
+			"y": 24,
+			"args":{
+			}
+		},
+		{
+			"type": "random",
+			"x": 53,
+			"y": 27,
+			"args":{
+			}
+		},
+		{
+			"type": "random",
+			"x": 60,
+			"y": 31,
+			"args":{
+			}
+		},
+		{
+			"type": "random",
+			"x": 54,
+			"y": 36,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 57,
+			"y": 3,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 44,
+			"y": 5,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 61,
+			"y": 7,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 51,
+			"y": 5,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 54,
+			"y": 8,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 47,
+			"y": 12,
+			"args":{
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 67,
+			"y": 11,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 65,
+			"y": 17,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 59,
+			"y": 12,
+			"args":{
+				"direction": "R",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 56,
+			"y": 18,
+			"args":{
+				"direction": "R",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "moving",
+			"x": 18,
+			"y": 15,
+			"args":{
+				"pattern": ["U","L","D","R"]
+			}
+		},
+		{
+			"type": "moving",
+			"x": 6,
+			"y": 10,
+			"args":{
+				"pattern": ["U","L","D","R"]
+			}
+		},
+		{
+			"type": "moving",
+			"x": 21,
+			"y": 4,
+			"args":{
+				"pattern": ["U","L","D","R"]
+			}
+		},
+		{
+			"type": "moving",
+			"x": 37,
+			"y": 8,
+			"args":{
+				"pattern": ["U","L","D","R"]
+			}
+		}
+	],
+	"spawns": [
+		[73, 23]
+	]
+}

@@ -1,0 +1,136 @@
+{
+	"first_input": "ui_down",
+	"bpm": 85,
+	"zoom":1.2,
+	"enemies": [	
+		{
+			"type": "static",
+			"x": 17,
+			"y": 19,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 20,
+			"y": 14,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 23,
+			"y": 15,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 27,
+			"y": 14,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 28,
+			"y": 16,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 33,
+			"y": 14,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 35,
+			"y": 15,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 30,
+			"y": 17,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 29,
+			"y": 18,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 23,
+			"y": 20,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 20,
+			"y": 26,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 29,
+			"y": 28,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 26,
+			"y": 24,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 34,
+			"y": 25,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 32,
+			"y": 22,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 37,
+			"y": 22,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 39,
+			"y": 21,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 38,
+			"y": 18,
+			"args":{
+			}
+		}
+	],
+	"spawns": [
+		[5, 7]
+	]
+}
