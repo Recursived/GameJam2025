@@ -8,6 +8,8 @@ func _ready():
 	EventBus.connect("update_health", update_hearts)
 
 func update_hearts(current_life: int):
+	hearts_container.scale.x = 2 / GameManager.current_zoom
+	hearts_container.scale.y = 2 / GameManager.current_zoom
 	for child in hearts_container.get_children():
 		hearts_container.remove_child(child)
 		child.queue_free()  # nettoie les anciens cœurs
