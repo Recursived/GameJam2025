@@ -83,6 +83,7 @@ func spawn_player():
 	var current_spawn_cell: Vector2 = spawn_points[current_spawn_index]
 	current_head.init_head(first_input)
 	current_head.init_spawn_cell(current_spawn_cell)
+	reset_polygon()
 	
 	var previous_cell_direction = InputManager.input_contrary[current_head.previous_input]
 	var bell_cell = TileMapManager.get_neighbor_cell(
