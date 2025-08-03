@@ -72,6 +72,7 @@ func load_audio_library():
 	audio_library["mordre_q3"] = preload("res://resources/audio/sfx/SFX_zone_mordre_QUEUE_3.mp3")
 	audio_library["mordre_q4"] = preload("res://resources/audio/sfx/SFX_zone_mordre_QUEUE_4.mp3")
 	
+	audio_library["mordre_too_short"] = preload("res://resources/audio/sfx/SFX_mordre_too_short.mp3")
 	
 	
 func play_sfx(sound_name: String, volume: float = 1.0, pitch: float = 1.0):

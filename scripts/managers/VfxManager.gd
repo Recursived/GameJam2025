@@ -71,7 +71,7 @@ func _on_bell_touched(polygon: Polygon2D):
 	'''
 	
 func _on_tail_touched():
-	#TODO Bite tail at wrong place sound
+	EventBus.emit_signal("play_sfx", "mordre_too_short", 1.0)
 	tail_blink_color = Color.DARK_ORANGE
 
 func _on_pause_cooldown_reduced(pause_cooldown: int):
