@@ -163,7 +163,6 @@ func set_time_scale(scale: float):
 
 func _on_game_over():
 	print("Game Over! Final Score: ", score)
-	camera.queue_free()
 	current_state = GameState.MENU
 	SceneManager.change_scene("GameOverScreen", true)
 
