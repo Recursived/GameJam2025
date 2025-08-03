@@ -6,6 +6,8 @@ var loading_screen_scene = preload("res://scenes/UI/LoadingScreen.tscn")
 var scene_paths = {
 	"Main": "res://scenes/Main.tscn",
 	"StartScreen": "res://scenes/UI/StartScreen.tscn",
+	"GameOverScreen": "res://scenes/UI/GameOverScreen.tscn",
+	"WinScreen": "res://scenes/UI/WinScreen.tscn"
 }
 
 func _ready():
