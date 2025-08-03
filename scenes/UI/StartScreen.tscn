@@ -360,9 +360,9 @@ texture = ExtResource("9_f4bl7")
 
 [node name="play" type="TextureButton" parent="."]
 layout_mode = 2
-offset_left = -22.0
+offset_left = -13.0
 offset_top = 235.0
-offset_right = 725.0
+offset_right = 734.0
 offset_bottom = 474.0
 scale = Vector2(0.3, 0.3)
 pivot_offset = Vector2(373.5, 119.5)
