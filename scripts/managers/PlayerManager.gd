@@ -11,7 +11,7 @@ var spawn_points: Array[Vector2] = [Vector2.ZERO]
 var current_spawn_index: int = 0
 var reset_min_size: int = 1
 var is_alive: bool
-var default_health:int = 3
+var default_health:int = 6
 var health:int = 0
 var first_input:String = "ui_right"
 
@@ -26,7 +26,6 @@ func _ready():
 	tail_list = []
 	is_alive = true
 	
-	EventBus.connect("game_started", _on_game_started)
 	EventBus.connect("game_won", _on_game_won)
 	EventBus.connect("player_died", _on_player_died)
 	EventBus.connect("head_cell_changed", _on_player_movement)
@@ -99,6 +98,7 @@ func spawn_player():
 	
 	health = default_health
 	is_alive = true
+	
 	print("Player spawned at: ", current_spawn_cell)
 
 func remove_player():
@@ -210,6 +210,7 @@ func get_player() -> Area2D:
 func take_damage(amount: int):
 	EventBus.emit_signal("took_damage")
 	health-=1
+	EventBus.emit_signal("update_health", health)
 	if health <= 0:
 		die()
 

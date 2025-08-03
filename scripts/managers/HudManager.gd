@@ -4,10 +4,12 @@ extends Node
 func _ready():
 	EventBus.connect("input_buffer_action", on_listen_for_debug_mode_pressed) 
 	EventBus.connect("input_buffer_action", on_pause_menu_pressed) 
+	EventBus.connect("game_started", on_game_started) 
 
 
 var debug_hud_instance: Node = null
 var pause_menu_hud_instance: Node = null
+var level_hud_instance: Node = null
 
 func on_listen_for_debug_mode_pressed(action: String):
 	if action == "toggle_debug":
@@ -41,3 +43,11 @@ func on_pause_menu_pressed(action: String):
 			else:
 				print("Error: Could not load PauseMenu.tscn!")
 		
+func on_game_started():
+	var state = GameManager.get_state()
+	var level_hud_scene = load("res://scenes/UI/LevelHud.tscn")
+	if level_hud_scene:
+		level_hud_instance = level_hud_scene.instantiate()
+		get_tree().current_scene.add_child(level_hud_instance)
+	else:
+		print("Error: Could not load PauseMenu.tscn!")
