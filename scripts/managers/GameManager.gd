@@ -148,7 +148,7 @@ func _on_game_won():
 		SceneManager.change_scene("Main", true)
 	else:
 		current_state = GameState.MENU
-		SceneManager.change_scene("StartScreen", true)
+		SceneManager.change_scene("WinScreen", true)
 
 func add_score(points: int):
 	score += points
@@ -165,7 +165,7 @@ func _on_game_over():
 	print("Game Over! Final Score: ", score)
 	camera.queue_free()
 	current_state = GameState.MENU
-	SceneManager.change_scene("StartScreen", true)
+	SceneManager.change_scene("GameOverScreen", true)
 
 func _on_score_changed(new_score: int):
 	print("Score: ", new_score)
