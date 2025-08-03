@@ -30,7 +30,6 @@ signal head_cell_changed(
 	next_input: String
 )
 signal bell_changed(tail_object: Tail)
-signal flash_snake(color: Vector3, duration: float)
 signal update_health(current_health: int)
 signal head_on_tail_collision(tail_object: Tail)
 signal head_on_wall_collision
@@ -40,6 +39,7 @@ signal tail_touched
 signal wall_touched
 signal head_rollbacked
 signal took_damage
+signal pause_cooldown_reduced(pause_cooldown: int)
 #endregion
 
 #region Player Events
@@ -82,6 +82,11 @@ signal quarter_beat_triggered(quarter_beat_number: int)
 signal eight_beat_triggered
 signal movement_input_on_beat(input: String)
 signal movement_input_not_on_beat(input: String)
+#endregion
+
+#region Vfx Events
+signal glow_bell(color: Color, duration: float)
+signal glow_enemy(color: Color, duration: float, enemy: EnemyManager.Enemy)
 #endregion
 
 func _ready():
