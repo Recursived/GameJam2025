@@ -33,6 +33,7 @@ func _ready():
 	EventBus.connect("player_respawned", _on_respawned)
 	EventBus.connect("head_on_tail_collision", _on_head_on_tail_collision)
 	EventBus.connect("head_on_wall_collision", _on_head_on_wall_collision)
+	EventBus.connect("head_on_cow_collision", _on_head_on_wall_collision)
 	EventBus.connect("size_changed", _on_size_changed)
 	print("PlayerManager initialized")
 

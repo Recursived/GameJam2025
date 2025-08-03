@@ -33,6 +33,7 @@ signal bell_changed(tail_object: Tail)
 signal update_health(current_health: int)
 signal head_on_tail_collision(tail_object: Tail)
 signal head_on_wall_collision
+signal head_on_cow_collision
 signal rollback_head(new_cell: Vector2)
 signal bell_touched(polygon: Polygon2D)
 signal tail_touched
@@ -40,6 +41,7 @@ signal wall_touched
 signal head_rollbacked
 signal took_damage
 signal pause_cooldown_reduced(pause_cooldown: int)
+signal capture_result(is_cow_captured: bool)
 #endregion
 
 #region Player Events

@@ -67,15 +67,18 @@ func _on_game_over():
 		enemy.queue_free()
 
 func _on_bell_touched(polygon_2d: Polygon2D):
+	var is_cow_captured:bool = false
 	var new_enemy_list: Array[Enemy] = []
 	var polygon: PackedVector2Array = polygon_2d.polygon
 	for enemy in list_enemies:
 		var enemy_pos: Vector2 = enemy.get_area_position()
 		if Geometry2D.is_point_in_polygon(enemy_pos, polygon):
+			is_cow_captured = true
 			EventBus.emit_signal("enemy_died", enemy)
 			enemy.die()
 		else:
 			new_enemy_list.append(enemy)
 	list_enemies = new_enemy_list
+	EventBus.emit_signal("capture_result", is_cow_captured)
 	if list_enemies.is_empty():
 		EventBus.emit_signal("game_won")
