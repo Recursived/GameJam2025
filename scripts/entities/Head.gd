@@ -71,6 +71,7 @@ func _on_quarter_beat(quarter_beat_number: int):
 		EventBus.emit_signal("pause_cooldown_reduced", pause_cooldown)
 	elif pause_cooldown<=0 and GameManager.get_movement_paused():
 		GameManager.set_movement_paused(false)
+		PlayerManager.reset_polygon()
 		EventBus.emit_signal("size_changed", PlayerManager.reset_min_size)
 	
 func _on_head_collide(object):
