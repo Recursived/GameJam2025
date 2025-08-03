@@ -42,6 +42,26 @@ func shake_camera():
 func _on_bell_touched(polygon: Polygon2D):
 	tail_blink_color = Color.GREEN_YELLOW
 	
+	# Oblgié de verifier avant chaque await car l'objet peut être détruit entre temps
+	if not is_instance_valid(polygon):
+		return
+	var ground_color = Color(1,1,1,0.5)
+	polygon.color = ground_color
+	polygon.z_index = 0
+	get_tree().current_scene.add_child(polygon)
+	await get_tree().create_timer(0.1).timeout
+	if not is_instance_valid(polygon):
+		return
+	polygon.color = Color(1,1,1,0)
+	await get_tree().create_timer(0.1).timeout
+	if not is_instance_valid(polygon):
+		return
+	polygon.color = ground_color
+	await get_tree().create_timer(0.1).timeout
+	if not is_instance_valid(polygon):
+		return
+	get_tree().current_scene.remove_child(polygon)
+	
 func _on_tail_touched():
 	tail_blink_color = Color.DARK_ORANGE
 
