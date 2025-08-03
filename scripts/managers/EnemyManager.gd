@@ -57,7 +57,7 @@ func add_enemy(enemy_scene, x, y, enemy_type, args):
 
 func on_move_enemies():
 	# sequential moves to avoid problems with collisions
-	if not GameManager.get_movement_paused():
+	if not GameManager.get_movement_paused() and PlayerManager.is_alive:
 		for enemy in list_enemies:
 			enemy.is_rollbacked=false
 			enemy.move()

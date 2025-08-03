@@ -183,11 +183,10 @@ func _on_size_changed(new_size: int):
 
 func _on_head_on_wall_collision():
 	take_damage(1)
-	if is_alive:
-		EventBus.emit_signal("wall_touched")
-		if current_head.is_moving:
-			var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
-			EventBus.emit_signal("rollback_head", head_cell)
+	EventBus.emit_signal("wall_touched")
+	if current_head.is_moving:
+		var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
+		EventBus.emit_signal("rollback_head", head_cell)
 	
 func _remove_back_tail() -> Tail:
 	var old_bell: Tail = tail_list.pop_front()
@@ -225,7 +224,6 @@ func take_damage(amount: int):
 
 func die():
 	is_alive = false
-	EventBus.emit_signal("player_died")
 	EventBus.emit_signal("play_sfx", "player_death")
 
 func _on_respawned():

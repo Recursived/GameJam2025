@@ -63,9 +63,27 @@ func initialize(origin: Vector2, type: EnemyManager.EnemyType, args: Dictionary)
 			turn_on_collide = args["turn_on_collide"]
 	
 		
-func _on_area_entity_body_entered(body : Node2D):		
-	rollback_move()
-	# emit_signal("enemy_collided", body)
+func _on_area_entity_body_entered(body : Node2D):
+	if is_instance_of(body, Head):
+		if last_position and PlayerManager.current_head:
+			var current_input = PlayerManager.current_head.next_input
+			var direction = InputManager.input_dict[current_input]["neighbor"]
+			var next_cell = TileMapManager.get_neighbor_cell(last_position, direction)
+			position = TileMapManager.cell_to_position(next_cell)
+			if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
+				current_direction = get_kamikaze_rollback_direction(current_direction)
+			if enemy_type == EnemyManager.EnemyType.MOVING:
+				path_forward = !path_forward
+	else:
+		if last_position:
+			position =  TileMapManager.cell_to_position(last_position)
+			current_wait_time = 0
+			if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
+				current_direction = get_kamikaze_rollback_direction(current_direction)
+			if enemy_type == EnemyManager.EnemyType.MOVING:
+				path_forward = !path_forward
+			move()
+	is_rollbacked = true
 
 
 func move():
@@ -192,16 +210,4 @@ func move_enemy_type_kamikaze():
 	var neighbour = TileMapManager.get_neighbor_cell(TileMapManager.position_to_cell(position), current_direction)
 	position = TileMapManager.cell_to_position(neighbour)
 	current_wait_time = 0  # Reset cooldown after moving
-
-func rollback_move():
-	if last_position:
-		position =  TileMapManager.cell_to_position(last_position)
-		current_wait_time = 0
-		if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
-			current_direction = get_kamikaze_rollback_direction(current_direction)
-			move()
-	is_rollbacked = true
-	
-	
-
 #endregion

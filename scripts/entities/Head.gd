@@ -75,6 +75,8 @@ func _on_quarter_beat(quarter_beat_number: int):
 		EventBus.emit_signal("size_changed", PlayerManager.reset_min_size)
 		if EnemyManager.list_enemies.is_empty():
 			EventBus.emit_signal("game_won")
+		if not PlayerManager.is_alive:
+			EventBus.emit_signal("player_died")
 	
 func _on_head_collide(object):
 	if is_instance_of(object, Tail):
