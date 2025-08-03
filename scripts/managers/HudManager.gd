@@ -2,8 +2,8 @@ extends Node
 
 
 func _ready():
-	EventBus.connect("input_buffer_action", on_listen_for_debug_mode_pressed) 
-	EventBus.connect("input_buffer_action", on_pause_menu_pressed) 
+	# EventBus.connect("input_buffer_action", on_listen_for_debug_mode_pressed) 
+	# EventBus.connect("input_buffer_action", on_pause_menu_pressed) 
 	EventBus.connect("game_started", on_game_started) 
 
 
