@@ -78,6 +78,10 @@ func _on_head_collide(object):
 		EventBus.emit_signal("head_on_tail_collision", object)
 		GameManager.set_movement_paused(true)
 		pause_cooldown = DEFAULT_PAUSE_COOLDOWN
+	elif is_instance_of(object, Area2D):
+		EventBus.emit_signal("head_on_cow_collision")
+		GameManager.set_movement_paused(true)
+		pause_cooldown = DEFAULT_PAUSE_COOLDOWN
 	else:
 		EventBus.emit_signal("head_on_wall_collision")
 		GameManager.set_movement_paused(true)

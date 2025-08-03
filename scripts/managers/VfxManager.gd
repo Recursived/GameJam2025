@@ -14,6 +14,9 @@ func _ready():
 	EventBus.connect("enemy_died", _on_enemy_died)
 	EventBus.connect("bell_touched", _on_bell_touched)
 	EventBus.connect("tail_touched", _on_tail_touched)
+	EventBus.connect("head_on_wall_collision", _on_wall_touched)
+	EventBus.connect("head_on_cow_collision", _on_cow_touched)
+	EventBus.connect("capture_result", _on_capture_result)
 
 func init():
 	camera = GameManager.camera
@@ -40,6 +43,8 @@ func shake_camera():
 	tween.tween_property(camera, "position", original_position, 0.1)
 
 func _on_bell_touched(polygon: Polygon2D):
+	#TODO Bite bell sound
+	
 	tail_blink_color = Color.GREEN_YELLOW
 	
 	# Oblgié de verifier avant chaque await car l'objet peut être détruit entre temps
@@ -63,6 +68,7 @@ func _on_bell_touched(polygon: Polygon2D):
 	get_tree().current_scene.remove_child(polygon)
 	
 func _on_tail_touched():
+	#TODO Bite tail at wrong place sound
 	tail_blink_color = Color.DARK_ORANGE
 
 func _on_pause_cooldown_reduced(pause_cooldown: int):
@@ -71,3 +77,20 @@ func _on_pause_cooldown_reduced(pause_cooldown: int):
 
 func _on_enemy_died(enemy: EnemyManager.Enemy):
 	EventBus.emit_signal("glow_enemy", Color.SANDY_BROWN, 2, enemy)
+
+func _on_wall_touched():
+	#TODO Wall hit sound
+	pass
+	
+func _on_cow_touched():
+	#TODO Wall hit sound ?
+	#TODO Cow sound
+	pass
+
+func _on_capture_result(capture_result:bool):
+	if capture_result:
+		#TODO Capture with cow sound
+		pass
+	else:
+		#TODO Capture without cow sound
+		pass
