@@ -17,6 +17,7 @@ var high_score: int = 0
 var current_level: int = 1
 var lives: int = 3
 var time_scale: float = 1.0
+var is_movement_paused = false
 
 var camera: Camera2D
 
@@ -38,10 +39,6 @@ func _ready():
 	
 	load_high_score()
 	print("GameManager initialized")
-
-func _input(event):
-	if event.is_action_pressed("pause"):
-		toggle_pause()
 
 func set_level(level: int):
 	current_level = level
@@ -95,11 +92,18 @@ func load_level():
 	load_camera(json_data)
 	load_spawn_points(json_data)
 	load_enemies(json_data)
-	
+
+func set_movement_paused(paused: bool):
+	is_movement_paused = paused
+
+func get_movement_paused():
+	return is_movement_paused
+
 func start_game():
 	load_level()
 	VfxManager.init()
 	current_state = GameState.PLAYING
+	is_movement_paused = false
 	score = 0
 	lives = 3
 	EventBus.emit_signal("game_started")

@@ -2,6 +2,7 @@ extends Node2D
 
 signal enemy_collided(body)
 @onready var sprite = $AnimatedSprite2D
+@onready var shader_capture = load("res://resources/shaders/enemy_shader_material.tres")
 
 #region common variables
 var enemy_type : EnemyManager.EnemyType = EnemyManager.EnemyType.STATIC
@@ -9,6 +10,8 @@ var cooldown_move : int = 0
 var current_wait_time: int = 0
 var last_position : Vector2 = Vector2.ZERO
 var is_alive: bool = true
+var is_rollbacked = false
+var own_shader
 #endregion
 
 #region moving type variable
@@ -31,6 +34,9 @@ func _ready():
 		self.connect("body_entered", Callable(self, "_on_area_entity_body_entered"))
 		self.connect("area_entered", Callable(self, "_on_area_entity_body_entered"))
 		EventBus.connect("quarter_beat_triggered", _on_quarter_beat)
+		EventBus.connect("glow_enemy", _on_glow_enemy)
+		own_shader = shader_capture.duplicate()
+		sprite.material = own_shader
 
 func _process(delta: float) -> void:
 	if not is_alive and not sprite.is_playing():
@@ -62,13 +68,14 @@ func _on_area_entity_body_entered(body : Node2D):
 
 
 func move():
-	match enemy_type:
-		EnemyManager.EnemyType.MOVING:
-			move_enemy_type_moving()
-		EnemyManager.EnemyType.RANDOM:
-			move_enemy_type_random()
-		EnemyManager.EnemyType.KAMIKAZE:
-			move_enemy_type_kamikaze()
+	if not is_rollbacked:
+		match enemy_type:
+			EnemyManager.EnemyType.MOVING:
+				move_enemy_type_moving()
+			EnemyManager.EnemyType.RANDOM:
+				move_enemy_type_random()
+			EnemyManager.EnemyType.KAMIKAZE:
+				move_enemy_type_kamikaze()
 			
 			
 
@@ -81,6 +88,13 @@ func die():
 	sprite.animation = death_animation % EnemyManager.type_to_string[enemy_type]
 	sprite.play()
 	is_alive = false
+
+func _on_glow_enemy(color: Color, duration: float, enemy: EnemyManager.Enemy):
+	if enemy == self:
+		own_shader.set_shader_parameter("flash_strength", 0.5)
+		own_shader.set_shader_parameter("flash_color", color)
+		await get_tree().create_timer(duration).timeout
+		own_shader.set_shader_parameter("flash_strength", 0.0)
 
 #region utils enemy function 
 func get_random_direction():
@@ -185,6 +199,7 @@ func rollback_move():
 		if enemy_type == EnemyManager.EnemyType.KAMIKAZE:
 			current_direction = get_kamikaze_rollback_direction(current_direction)
 			move()
+	is_rollbacked = true
 	
 	
 

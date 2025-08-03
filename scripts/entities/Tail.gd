@@ -13,7 +13,7 @@ func _ready():
 	is_bell = false
 	EventBus.connect("bell_changed", on_becoming_bell)
 	EventBus.connect("quarter_beat_triggered", _on_quarter_beat)
-	EventBus.connect("flash_snake", flash_sprite)
+	EventBus.connect("glow_bell", _on_glow_bell)
 	sprite.material = shader_capture
 
 func _physics_process(delta):
@@ -45,12 +45,9 @@ func _on_quarter_beat(quarter_beat_number: int):
 	else:
 		sprite.frame = 7 - (quarter_beat_number%7)
 
-func flash_sprite(color, duration):
+func _on_glow_bell(color: Color, duration: float):
+	shader_capture.set_shader_parameter("flash_strength", 0.5)
 	shader_capture.set_shader_parameter("flash_color", color)
-	shader_capture.set_shader_parameter("flash_strength", 0.4)
 	await get_tree().create_timer(duration).timeout
 	shader_capture.set_shader_parameter("flash_strength", 0.0)
-	await get_tree().create_timer(duration).timeout
-	shader_capture.set_shader_parameter("flash_strength", 0.4)
-	await get_tree().create_timer(duration).timeout
-	shader_capture.set_shader_parameter("flash_strength", 0.0)
+		
