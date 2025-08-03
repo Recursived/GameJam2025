@@ -114,8 +114,7 @@ func _on_player_died():
 	remove_player()
 
 func _on_game_won():
-	current_head.queue_free()
-	current_head = null
+	current_head.is_moving = false
 
 func _on_checkpoint_reached(checkpoint_index: int):
 	if checkpoint_index < spawn_points.size():

@@ -73,6 +73,8 @@ func _on_quarter_beat(quarter_beat_number: int):
 		GameManager.set_movement_paused(false)
 		PlayerManager.reset_polygon()
 		EventBus.emit_signal("size_changed", PlayerManager.reset_min_size)
+		if EnemyManager.list_enemies.is_empty():
+			EventBus.emit_signal("game_won")
 	
 func _on_head_collide(object):
 	if is_instance_of(object, Tail):

@@ -75,7 +75,7 @@ func _on_tail_touched():
 	tail_blink_color = Color.DARK_ORANGE
 
 func _on_pause_cooldown_reduced(pause_cooldown: int):
-	EventBus.emit_signal("play_sfx", "button_click", 1.0)
+	EventBus.emit_signal("play_sfx", "button_play", 1.0)
 	EventBus.emit_signal("glow_bell", tail_blink_color, 0.1)
 
 func _on_enemy_died(enemy: EnemyManager.Enemy):

@@ -38,6 +38,8 @@ func change_scene_immediate(scene_name: String):
 
 func change_scene_with_loading(scene_name: String):
 	# Show loading screen first
+	FadeIn.transition()
+	await EventBus.on_fade_finished
 	var loading_instance = loading_screen_scene.instantiate()
 	get_tree().current_scene.add_child(loading_instance)
 	

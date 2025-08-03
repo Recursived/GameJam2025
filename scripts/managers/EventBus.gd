@@ -71,6 +71,7 @@ signal resume_music
 #region Scene Events
 signal scene_transition_started(from_scene: String, to_scene: String)
 signal scene_transition_completed(scene_name: String)
+signal on_fade_finished
 #endregion
 
 #region Item/Collectible Events

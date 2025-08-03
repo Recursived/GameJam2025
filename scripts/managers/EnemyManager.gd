@@ -80,5 +80,3 @@ func _on_bell_touched(polygon_2d: Polygon2D):
 			new_enemy_list.append(enemy)
 	list_enemies = new_enemy_list
 	EventBus.emit_signal("capture_result", is_cow_captured)
-	if list_enemies.is_empty():
-		EventBus.emit_signal("game_won")

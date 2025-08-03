@@ -29,6 +29,7 @@ TileMapManager="*res://scripts/managers/TileMapManager.gd"
 EnemyManager="*res://scripts/managers/EnemyManager.gd"
 RhythmManager="*res://scripts/managers/RhythmManager.gd"
 VfxManager="*res://scripts/managers/VfxManager.gd"
+FadeIn="*res://scenes/UI/FadeIn.tscn"
 
 [display]
 
