@@ -70,13 +70,26 @@ func _on_bell_touched(polygon_2d: Polygon2D):
 	var is_cow_captured:bool = false
 	var new_enemy_list: Array[Enemy] = []
 	var polygon: PackedVector2Array = polygon_2d.polygon
+	var died_enemy_list: Array[Enemy] = []
 	for enemy in list_enemies:
 		var enemy_pos: Vector2 = enemy.get_area_position()
 		if Geometry2D.is_point_in_polygon(enemy_pos, polygon):
 			is_cow_captured = true
 			EventBus.emit_signal("enemy_died", enemy)
+			died_enemy_list.append(enemy)
 			enemy.die()
 		else:
 			new_enemy_list.append(enemy)
+		
 	list_enemies = new_enemy_list
 	EventBus.emit_signal("capture_result", is_cow_captured)
+	
+	for enemy in died_enemy_list:
+		if not is_instance_valid(enemy):
+			return
+		if enemy.has_node("AnimationPlayer"):
+			var anim_player: AnimationPlayer = enemy.get_node("AnimationPlayer")
+			if anim_player.has_animation("tick"):
+				anim_player.play("tick")
+		await get_tree().create_timer(0.15).timeout
+	died_enemy_list.clear()
