@@ -150,12 +150,10 @@ func _on_head_on_tail_collision(tail_object: Tail):
 	if(tail_object.is_bell):
 		var polygon_2d: Polygon2D = _get_polygon_from_tail()
 		EventBus.emit_signal("bell_touched", polygon_2d)
-		EventBus.emit_signal("size_changed", reset_min_size)
-		
+
 	# Reset to the tail behind the tail object touched
 	else:
 		EventBus.emit_signal("tail_touched")
-		EventBus.emit_signal("size_changed", reset_min_size)
 
 func _get_polygon_from_tail() -> Polygon2D:
 	var polygon: PackedVector2Array = []
@@ -181,7 +179,6 @@ func _on_head_on_wall_collision():
 		if current_head.is_moving:
 			var head_cell = TileMapManager.position_to_cell(_remove_front_tail().position)
 			EventBus.emit_signal("rollback_head", head_cell)
-			EventBus.emit_signal("size_changed", reset_min_size)
 	
 func _remove_back_tail() -> Tail:
 	var old_bell: Tail = tail_list.pop_front()

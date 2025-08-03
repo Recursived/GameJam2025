@@ -8,6 +8,8 @@ var next_cell:Vector2 = Vector2.ZERO
 var previous_input: String
 var next_input: String
 var is_moving: bool
+const DEFAULT_PAUSE_COOLDOWN: int = 3
+var pause_cooldown: int = 0
 
 func _ready():
 	EventBus.connect("rollback_head", on_rollback_head)
@@ -32,7 +34,7 @@ func init_spawn_cell(cell: Vector2):
 	next_cell = cell
 
 func _trigger_next_move(action: String):
-	if action in InputManager.input_dict:
+	if action in InputManager.input_dict and (not GameManager.get_movement_paused()):
 		var processed_cell = TileMapManager.get_neighbor_cell(
 			previous_cell,
 			InputManager.input_dict[action]["neighbor"]
@@ -42,7 +44,7 @@ func _trigger_next_move(action: String):
 			next_input = action
 
 func _on_movement():
-	if PlayerManager.is_alive and is_moving:
+	if PlayerManager.is_alive and is_moving and (not GameManager.get_movement_paused()):
 		next_cell = TileMapManager.get_neighbor_cell(
 			previous_cell,
 			InputManager.input_dict[next_input]["neighbor"]
@@ -64,12 +66,22 @@ func _on_movement():
 
 func _on_quarter_beat(quarter_beat_number: int):
 	sprite.frame = quarter_beat_number % 7
+	if pause_cooldown > 0:
+		pause_cooldown-=1
+		EventBus.emit_signal("pause_cooldown_reduced", pause_cooldown)
+	elif pause_cooldown<=0 and GameManager.get_movement_paused():
+		GameManager.set_movement_paused(false)
+		EventBus.emit_signal("size_changed", PlayerManager.reset_min_size)
 	
 func _on_head_collide(object):
 	if is_instance_of(object, Tail):
 		EventBus.emit_signal("head_on_tail_collision", object)
+		GameManager.set_movement_paused(true)
+		pause_cooldown = DEFAULT_PAUSE_COOLDOWN
 	else:
 		EventBus.emit_signal("head_on_wall_collision")
+		GameManager.set_movement_paused(true)
+		pause_cooldown = DEFAULT_PAUSE_COOLDOWN
 
 func on_rollback_head(new_cell: Vector2):
 	if is_moving:
