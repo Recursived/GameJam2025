@@ -18,6 +18,7 @@ var current_level: int = 1
 var lives: int = 1
 var time_scale: float = 1.0
 var is_movement_paused = false
+var current_zoom:float = 1.00
 
 var camera: Camera2D
 
@@ -71,12 +72,12 @@ func load_enemies(json_data):
 		enemies.append(enemy)
 
 func load_camera(json_data):
-	var zoom = json_data["zoom"]
+	current_zoom = json_data["zoom"]
 	if camera:
 		camera.queue_free()
 	camera = Camera2D.new()
-	camera.position = Vector2(640/zoom, 360/zoom)
-	camera.zoom = Vector2(zoom ,zoom)
+	camera.position = Vector2(640/current_zoom, 360/current_zoom)
+	camera.zoom = Vector2(current_zoom ,current_zoom)
 	get_tree().current_scene.add_child(camera)
 
 func load_bpm(json_data):
