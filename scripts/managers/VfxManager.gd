@@ -47,6 +47,7 @@ func _on_bell_touched(polygon: Polygon2D):
 	
 	tail_blink_color = Color.GREEN_YELLOW
 	
+	'''
 	# Oblgié de verifier avant chaque await car l'objet peut être détruit entre temps
 	if not is_instance_valid(polygon):
 		return
@@ -66,6 +67,7 @@ func _on_bell_touched(polygon: Polygon2D):
 	if not is_instance_valid(polygon):
 		return
 	get_tree().current_scene.remove_child(polygon)
+	'''
 	
 func _on_tail_touched():
 	#TODO Bite tail at wrong place sound

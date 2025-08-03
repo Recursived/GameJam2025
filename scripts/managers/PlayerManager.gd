@@ -14,6 +14,7 @@ var is_alive: bool
 var default_health:int = 6
 var health:int = 0
 var first_input:String = "ui_right"
+var current_polygon:Polygon2D = null
 
 var previous_input: String
 var current_input: String
@@ -150,11 +151,18 @@ func _on_head_on_tail_collision(tail_object: Tail):
 	# Reset the entire tail list
 	if(tail_object.is_bell):
 		var polygon_2d: Polygon2D = _get_polygon_from_tail()
+		current_polygon = polygon_2d.duplicate()
 		EventBus.emit_signal("bell_touched", polygon_2d)
 
 	# Reset to the tail behind the tail object touched
 	else:
 		EventBus.emit_signal("tail_touched")
+
+func reset_polygon():
+	if is_instance_valid(PlayerManager.current_polygon):
+		if get_tree().current_scene.has_node(current_polygon.get_path()):
+			get_tree().current_scene.remove_child(current_polygon)
+	current_polygon = null
 
 func _get_polygon_from_tail() -> Polygon2D:
 	var polygon: PackedVector2Array = []

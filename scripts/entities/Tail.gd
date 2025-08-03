@@ -46,8 +46,17 @@ func _on_quarter_beat(quarter_beat_number: int):
 		sprite.frame = 7 - (quarter_beat_number%7)
 
 func _on_glow_bell(color: Color, duration: float):
+	if is_instance_valid(PlayerManager.current_polygon):
+		var ground_color = Color(1,1,1,0.5)
+		PlayerManager.current_polygon.color = ground_color
+		PlayerManager.current_polygon.z_index = 0
+		get_tree().current_scene.add_child(PlayerManager.current_polygon)
+	
 	shader_capture.set_shader_parameter("flash_strength", 0.5)
 	shader_capture.set_shader_parameter("flash_color", color)
 	await get_tree().create_timer(duration).timeout
 	shader_capture.set_shader_parameter("flash_strength", 0.0)
+	
+	if is_instance_valid(PlayerManager.current_polygon):
+		PlayerManager.current_polygon.color = Color(1,1,1,0)
 		
