@@ -5,13 +5,19 @@ var sfx_players: Array[AudioStreamPlayer] = []
 var max_sfx_players: int = 10
 
 var master_volume: float = 1.0
-var music_volume: float = 0.7
-var sfx_volume: float = 0.8
+var music_volume: float = 0.6
+var sfx_volume: float = 0.9
 
 var audio_library = {}
 
 var current_music: String = ""
 var paused_music_position: float = 0.0
+
+
+const GROUP_SOUNDS = {
+	"COW" : ["cow_1", "cow_2", "cow_3", "cow_4", "cow_5"],
+	"MORDRE" : ["mordre_q1", "mordre_q2", "mordre_q3", "mordre_q4"],
+}
 
 func _ready():
 	setup_audio_players()
@@ -44,13 +50,30 @@ func setup_audio_players():
 
 func load_audio_library():
 	# Load your audio resources here
-	# Example:
+	audio_library["intro_sound"] = preload("res://resources/audio/sfx/SFX_Lancement_whoosh.mp3")
+	
+	audio_library["button_play"] = preload("res://resources/audio/sfx/sfx_play_button.mp3")
 	audio_library["button_click"] = preload("res://resources/audio/sfx/button_click.wav")
-	audio_library["game_music"] = preload("res://resources/audio/music/game_music.mp3")
-	audio_library["evlan"] = preload("res://resources/audio/music/evlan.mp3")
+	audio_library["button_hover"] = preload("res://resources/audio/sfx/sfx_button_hover.mp3")
+	
+	audio_library["game_music"] = preload("res://resources/audio/music/music_official.mp3")
+	
+	audio_library["cow_1"] = preload("res://resources/audio/sfx/COW_1.mp3")
+	audio_library["cow_2"] = preload("res://resources/audio/sfx/COW_2.mp3")
+	audio_library["cow_3"] = preload("res://resources/audio/sfx/COW_3.mp3")
+	audio_library["cow_4"] = preload("res://resources/audio/sfx/COW_4.mp3")
+	audio_library["cow_5"] = preload("res://resources/audio/sfx/COW_5.mp3")
+	
+	audio_library["wall_impact"] = preload("res://resources/audio/sfx/SFX_Wall_Impact.mp3")
+	audio_library["good_loop_without_cow"] = preload("res://resources/audio/sfx/SFX_good_loop_without_cow.mp3")
+	
+	audio_library["mordre_q1"] = preload("res://resources/audio/sfx/SFX_zone_mordre_QUEUE_1.mp3")
+	audio_library["mordre_q2"] = preload("res://resources/audio/sfx/SFX_zone_mordre_QUEUE_2.mp3")
+	audio_library["mordre_q3"] = preload("res://resources/audio/sfx/SFX_zone_mordre_QUEUE_3.mp3")
+	audio_library["mordre_q4"] = preload("res://resources/audio/sfx/SFX_zone_mordre_QUEUE_4.mp3")
 	
 	
-
+	
 func play_sfx(sound_name: String, volume: float = 1.0, pitch: float = 1.0):
 	if not audio_library.has(sound_name):
 		print("Warning: SFX '", sound_name, "' not found in audio library")

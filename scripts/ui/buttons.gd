@@ -25,6 +25,7 @@ func _on_mouse_entered():
 	# Animation d'agrandissement au survol
 	animate_scale(original_scale * hover_scale_factor)
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+	EventBus.emit_signal("play_sfx", "button_hover")
 
 func _on_mouse_exited():
 	# Animation de retour à la taille originale
