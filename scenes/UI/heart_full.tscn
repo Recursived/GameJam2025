@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq4uhqfpi4knu"]
+
+[ext_resource type="Texture2D" uid="uid://bmaqvfnsex8fr" path="res://resources/assets/coeur_plein.png" id="1_vder8"]
+
+[node name="HearFull" type="TextureRect"]
+texture = ExtResource("1_vder8")
+expand_mode = 2
+stretch_mode = 5

@@ -15,7 +15,7 @@ var current_state: GameState = GameState.MENU
 var score: int = 0
 var high_score: int = 0
 var current_level: int = 1
-var lives: int = 3
+var lives: int = 1
 var time_scale: float = 1.0
 
 var camera: Camera2D
@@ -101,7 +101,7 @@ func start_game():
 	VfxManager.init()
 	current_state = GameState.PLAYING
 	score = 0
-	lives = 3
+	lives = 1
 	EventBus.emit_signal("game_started")
 
 func pause_game():

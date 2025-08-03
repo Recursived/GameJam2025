@@ -14,6 +14,7 @@ func _reload():
 	var vsize = get_viewport().get_visible_rect().size
 	EventBus.emit_signal("viewport_size_changed", vsize)
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
+	EventBus.emit_signal("update_health", PlayerManager.default_health)
 
 func _on_viewport_size_changed():
 	var vsize = get_viewport().get_visible_rect().size

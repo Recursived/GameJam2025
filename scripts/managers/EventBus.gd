@@ -31,7 +31,7 @@ signal head_cell_changed(
 )
 signal bell_changed(tail_object: Tail)
 signal flash_snake(color: Vector3, duration: float)
-
+signal update_health(current_health: int)
 signal head_on_tail_collision(tail_object: Tail)
 signal head_on_wall_collision
 signal rollback_head(new_cell: Vector2)

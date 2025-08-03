@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://duw1pqswvngd8"]
+
+[ext_resource type="Script" uid="uid://dy3rdpmrhekny" path="res://scripts/ui/level_hud.gd" id="1_qqpq1"]
+[ext_resource type="PackedScene" uid="uid://dq4uhqfpi4knu" path="res://scenes/UI/heart_full.tscn" id="2_icfke"]
+
+[node name="LevelHud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qqpq1")
+heart_scene = ExtResource("2_icfke")
+
+[node name="HeartsContainer" type="HBoxContainer" parent="."]
+top_level = true
+z_index = 4096
+layout_direction = 2
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 30.0
+offset_bottom = 30.0
