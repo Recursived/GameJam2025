@@ -1,0 +1,144 @@
+{
+	"first_input": "ui_right",
+	"bpm": 80,
+	"zoom":1.4,
+	"enemies": [
+		{
+			"type": "kamikaze",
+			"x": 10,
+			"y": 20,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 20,
+			"y": 15,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 20,
+			"y": 21,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 26,
+			"y": 19,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 35,
+			"y": 11,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 38,
+			"y": 17,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 43,
+			"y": 8,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 46,
+			"y": 16,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 49,
+			"y": 13,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 20,
+			"y": 7,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "kamikaze",
+			"x": 11,
+			"y": 8,
+			"args":{
+				"direction": "L",
+				"turn_on_collide": "reverse"
+			}
+		},
+		{
+			"type": "static",
+			"x": 26,
+			"y": 5,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 38,
+			"y": 23,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 53,
+			"y": 16,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 52,
+			"y": 8,
+			"args":{
+			}
+		},
+		{
+			"type": "static",
+			"x": 9,
+			"y": 6,
+			"args":{
+			}
+		}		
+	],
+	"spawns": [
+		[6, 15]
+	]
+}
