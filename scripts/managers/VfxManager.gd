@@ -3,8 +3,6 @@ extends Node
 @onready var animated_texture = load("res://resources/shaders/new_animated_texture.tres")
 
 var original_position
-var shake_intensity = 2.0
-var shake_duration = 0.15
 var camera
 var tail_blink_color: Color = Color.GREEN_YELLOW
 
@@ -24,9 +22,9 @@ func init():
 	original_position = camera.position
 	
 func _on_took_damage():
-	shake_camera()
+	shake_camera(4.0, 0.2)
 
-func shake_camera():
+func shake_camera(shake_intensity, shake_duration):
 	tail_blink_color = Color.DARK_RED
 	
 	var tween = create_tween()
@@ -71,6 +69,7 @@ func _on_bell_touched(polygon: Polygon2D):
 	'''
 	
 func _on_tail_touched():
+	shake_camera(1, 0.1)
 	EventBus.emit_signal("play_sfx", "mordre_too_short", 1.0)
 	tail_blink_color = Color.DARK_ORANGE
 
