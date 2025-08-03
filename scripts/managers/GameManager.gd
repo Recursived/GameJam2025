@@ -98,6 +98,7 @@ func load_level():
 	
 func start_game():
 	load_level()
+	VfxManager.init()
 	current_state = GameState.PLAYING
 	score = 0
 	lives = 3

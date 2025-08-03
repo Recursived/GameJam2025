@@ -1,6 +1,7 @@
 class_name Tail 
 extends Area2D
 
+@onready var shader_capture = load("res://resources/shaders/crapture_shader_material.tres")
 
 @onready var sprite = $AnimatedSprite2D
 @export var is_bell:bool = false
@@ -12,6 +13,8 @@ func _ready():
 	is_bell = false
 	EventBus.connect("bell_changed", on_becoming_bell)
 	EventBus.connect("quarter_beat_triggered", _on_quarter_beat)
+	EventBus.connect("flash_snake", flash_sprite)
+	sprite.material = shader_capture
 
 func _physics_process(delta):
 	pass
@@ -41,3 +44,13 @@ func _on_quarter_beat(quarter_beat_number: int):
 		sprite.frame = quarter_beat_number % 7
 	else:
 		sprite.frame = 7 - (quarter_beat_number%7)
+
+func flash_sprite(color, duration):
+	shader_capture.set_shader_parameter("flash_color", color)
+	shader_capture.set_shader_parameter("flash_strength", 0.4)
+	await get_tree().create_timer(duration).timeout
+	shader_capture.set_shader_parameter("flash_strength", 0.0)
+	await get_tree().create_timer(duration).timeout
+	shader_capture.set_shader_parameter("flash_strength", 0.4)
+	await get_tree().create_timer(duration).timeout
+	shader_capture.set_shader_parameter("flash_strength", 0.0)
