@@ -360,9 +360,9 @@ texture = ExtResource("9_f4bl7")
 
 [node name="play" type="TextureButton" parent="."]
 layout_mode = 2
-offset_left = -13.0
+offset_left = -22.0
 offset_top = 235.0
-offset_right = 734.0
+offset_right = 725.0
 offset_bottom = 474.0
 scale = Vector2(0.3, 0.3)
 pivot_offset = Vector2(373.5, 119.5)
@@ -388,6 +388,11 @@ texture = ExtResource("6_ifie5")
 position = Vector2(1211, 699)
 texture = ExtResource("8_ciplo")
 
+[node name="CadreSnek" type="Sprite2D" parent="."]
+position = Vector2(1066, 388)
+scale = Vector2(0.580499, 0.580499)
+texture = ExtResource("4_0lnxs")
+
 [node name="DuneTroisiemePlan" type="Sprite2D" parent="."]
 position = Vector2(63, 586)
 scale = Vector2(0.469194, 0.469194)
@@ -397,11 +402,6 @@ texture = ExtResource("9_q65bo")
 position = Vector2(776, 616)
 scale = Vector2(0.572742, 0.572742)
 texture = ExtResource("10_ltmx6")
-
-[node name="CadreSnek" type="Sprite2D" parent="."]
-position = Vector2(1066, 388)
-scale = Vector2(0.580499, 0.580499)
-texture = ExtResource("4_0lnxs")
 
 [node name="Snek" type="Sprite2D" parent="."]
 position = Vector2(983, 352)
