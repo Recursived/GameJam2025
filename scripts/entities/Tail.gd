@@ -47,7 +47,7 @@ func _on_quarter_beat(quarter_beat_number: int):
 
 func _on_glow_bell(color: Color, duration: float):
 	if is_instance_valid(PlayerManager.current_polygon):
-		var ground_color = Color(1,1,1,0.5)
+		var ground_color = Color(0.65, 0.81, 0.45, 0.5)
 		PlayerManager.current_polygon.color = ground_color
 		PlayerManager.current_polygon.z_index = 0
 		get_tree().current_scene.add_child(PlayerManager.current_polygon)
@@ -58,5 +58,5 @@ func _on_glow_bell(color: Color, duration: float):
 	shader_capture.set_shader_parameter("flash_strength", 0.0)
 	
 	if is_instance_valid(PlayerManager.current_polygon):
-		PlayerManager.current_polygon.color = Color(1,1,1,0)
+		PlayerManager.current_polygon.color = Color(0.65, 0.81, 0.45, 0)
 		
