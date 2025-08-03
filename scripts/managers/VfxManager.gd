@@ -17,6 +17,7 @@ func _ready():
 	EventBus.connect("head_on_wall_collision", _on_wall_touched)
 	EventBus.connect("head_on_cow_collision", _on_cow_touched)
 	EventBus.connect("capture_result", _on_capture_result)
+	EventBus.connect("game_started", _on_game_started)
 
 func init():
 	camera = GameManager.camera
@@ -79,18 +80,20 @@ func _on_enemy_died(enemy: EnemyManager.Enemy):
 	EventBus.emit_signal("glow_enemy", Color.SANDY_BROWN, 2, enemy)
 
 func _on_wall_touched():
-	#TODO Wall hit sound
-	pass
+	EventBus.emit_signal("play_sfx", "wall_impact", 1.0)
 	
 func _on_cow_touched():
-	#TODO Wall hit sound ?
-	#TODO Cow sound
-	pass
+	var cow_sounds = AudioManager.GROUP_SOUNDS["COW"]
+	var selected = cow_sounds[randi() % cow_sounds.size()]
+	EventBus.emit_signal("play_sfx", selected, 1.0)
 
 func _on_capture_result(capture_result:bool):
 	if capture_result:
-		#TODO Capture with cow sound
-		pass
+		var capture_sounds = AudioManager.GROUP_SOUNDS["MORDRE"]
+		var selected = capture_sounds[randi() % capture_sounds.size()]
+		EventBus.emit_signal("play_sfx", selected, 1.0)
 	else:
-		#TODO Capture without cow sound
-		pass
+		EventBus.emit_signal("play_sfx", "good_loop_without_cow", 1.0)
+	
+func _on_game_started():
+	EventBus.emit_signal("play_music", "game_music", 0.0)
