@@ -12,6 +12,7 @@ var last_position : Vector2 = Vector2.ZERO
 var is_alive: bool = true
 var is_rollbacked = false
 var own_shader
+var own_animation_player
 #endregion
 
 #region moving type variable

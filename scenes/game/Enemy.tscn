@@ -1,10 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://f6jj5x5j2cai"]
+[gd_scene load_steps=32 format=3 uid="uid://f6jj5x5j2cai"]
 
 [ext_resource type="Script" uid="uid://urh26ejpkpfc" path="res://scripts/entities/Enemy.gd" id="1_6vb2m"]
 [ext_resource type="Texture2D" uid="uid://cg58w8xqa1224" path="res://resources/tileset/cow-tileset_kamikaze.png" id="2_n8vp2"]
 [ext_resource type="Texture2D" uid="uid://llemyxsjkhyh" path="res://resources/tileset/cow-tileset.png" id="3_jm6wa"]
 [ext_resource type="Texture2D" uid="uid://co1tfya5t8h6w" path="res://resources/tileset/cow-tileset_random.png" id="4_s3inr"]
 [ext_resource type="Texture2D" uid="uid://p4akg2bx1n25" path="res://resources/tileset/cow-tileset_static.png" id="5_p5wko"]
+[ext_resource type="Texture2D" uid="uid://cwjrr2ybwvcj0" path="res://resources/assets/tick.png" id="6_s3inr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4vy6o"]
 atlas = ExtResource("2_n8vp2")
@@ -215,6 +216,67 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jm6wa"]
 
+[sub_resource type="Animation" id="Animation_p5wko"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tick:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(8, -4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Tick:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_s3inr"]
+resource_name = "tick"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tick:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.133122, 0.333333),
+"transitions": PackedFloat32Array(0.267943, 0.267943),
+"update": 0,
+"values": [Vector2(8, 8), Vector2(8, -6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Tick:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4vy6o"]
+_data = {
+&"RESET": SubResource("Animation_p5wko"),
+&"tick": SubResource("Animation_s3inr")
+}
+
 [node name="Enemy" type="Area2D"]
 script = ExtResource("1_6vb2m")
 metadata/_custom_type_script = "uid://idcq0ns8td8a"
@@ -230,3 +292,14 @@ animation = &"idle_static"
 position = Vector2(8, 8)
 scale = Vector2(0.7, 0.7)
 shape = SubResource("RectangleShape2D_jm6wa")
+
+[node name="Tick" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 4
+position = Vector2(8, -4)
+texture = ExtResource("6_s3inr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4vy6o")
+}
